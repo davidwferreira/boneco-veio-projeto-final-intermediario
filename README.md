@@ -45,7 +45,7 @@ Loja online de action figures baseados na cultura cearense.
       <td align="center">
           <a href="https://github.com/meliszalee">
             <img src="https://avatars.githubusercontent.com/u/167802044?v=4" alt="Melissa Lee"
-             width="100px" style="transform: rotate(-90deg);" />
+             width="100px"/>
             <br />
             <sub><b>Melissa Lee</b></sub>
           </a>
