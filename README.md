@@ -68,5 +68,13 @@ Loja online de action figures baseados na cultura cearense.
           </a>
       </td>
     </tr>
+    <td align="center">
+          <a href="https://github.com/wullerbarros">
+            <img src="https://avatars.githubusercontent.com/u/105557727?v=4" alt="Wüller Barros"
+             width="100px" />
+            <br />
+            <sub><b>Wüller Barros</b></sub>
+          </a>
+      </td>
   </table>
 </div>
