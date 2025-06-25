@@ -13,7 +13,6 @@ import styles from "./Prateleira.module.css";
 export default function Prateleira() {
   const {
     produtos,
-    setProdutos, // Garanta que isso está disponível no seu hook
     adicionarProduto,
     editarProduto,
     deletarProduto,
@@ -75,23 +74,22 @@ export default function Prateleira() {
   /**
    * Exclui o produto e remove ele da prateleira.
    */
-  const handleExcluirProduto = useCallback(async (idProduto) => {
+  const handleExcluirProduto = async (idProduto) => {
     try {
-      await deletarProduto(idProduto);
-      setProdutos((listaAtual) =>
-        listaAtual.filter((produto) => produto.id !== idProduto)
-      );
+      await deletarProduto(idProduto); // já atualiza o estado
       mostrarSnackbar("Produto excluído com sucesso.");
     } catch (erro) {
       mostrarSnackbar("Erro ao excluir produto.", "error");
     }
-  }, [deletarProduto, setProdutos]);
+  };
 
   /**
    * Alterna o estado de favorito do produto de forma rápida e salva no backend.
    */
   const handleAlternarFavorito = async (idProduto) => {
-    const produtoEncontrado = produtos.find((produto) => produto.id === idProduto);
+    const produtoEncontrado = produtos.find(
+      (produto) => produto.id === idProduto
+    );
     if (!produtoEncontrado) return;
 
     const produtoAtualizado = {
@@ -99,7 +97,7 @@ export default function Prateleira() {
       isFavorite: !produtoEncontrado.isFavorite,
     };
     try {
-     // Atualiza o backend e o estado local
+      // Atualiza o backend e o estado local
       await editarProduto(idProduto, produtoAtualizado);
     } catch (erro) {
       mostrarSnackbar("Erro ao favoritar produto.", "error");
@@ -110,7 +108,9 @@ export default function Prateleira() {
    * Atualiza a nota do produto de forma rápida e salva no backend.
    */
   const handleAlterarNota = async (idProduto, novaNota) => {
-    const produtoEncontrado = produtos.find((produto) => produto.id === idProduto);
+    const produtoEncontrado = produtos.find(
+      (produto) => produto.id === idProduto
+    );
     if (!produtoEncontrado) return;
 
     const produtoAtualizado = {
@@ -121,8 +121,8 @@ export default function Prateleira() {
     // Atualização rápida local e pesistente no backend
     try {
       await editarProduto(idProduto, produtoAtualizado);
-    }catch (erro){
-      mostrarSnackbar("Erro ao avaliar o produto.", "error")
+    } catch (erro) {
+      mostrarSnackbar("Erro ao avaliar o produto.", "error");
     }
   };
 
