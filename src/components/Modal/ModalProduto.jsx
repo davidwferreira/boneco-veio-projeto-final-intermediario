@@ -1,20 +1,17 @@
-import React from "react";
-import ProdutoForm from "../ProdutoForm/ProdutoForm";
-import styles from "./ModalProduto.module.css";
+// src/components/ModalProduto/ModalProduto.jsx
+import * as Dialog from '@radix-ui/react-dialog';
+import ProdutoForm from '../ProdutoForm/ProdutoForm';
+import styles from './ModalProduto.module.css';
 
-/**
- * Modal unificado para cadastro e edição de produtos.
- * Determina o comportamento com base em `modoEdicao`.
- */
 export default function ModalProduto({
-  produto = null,         // Objeto do produto (modo edição) ou null (modo cadastro)
-  modoEdicao = false,     // Define se é edição ou cadastro
-  onClose,                // Função para fechar o modal
-  onSave,                 // Função para fechar após salvar com sucesso
-  adicionarProduto,       // Função do hook para adicionar
-  editarProduto,          // Função do hook para editar
-  carregarProdutos,       // Função para recarregar a lista
-  mostrarSnackbar, // Função para mostrar snackbar (feedback)
+  produto = null,
+  modoEdicao = false,
+  onClose,
+  onSave,
+  adicionarProduto,
+  editarProduto,
+  carregarProdutos,
+  mostrarSnackbar,
 }) {
   const handleSubmit = async (produtoData) => {
     if (modoEdicao) {
@@ -24,22 +21,27 @@ export default function ModalProduto({
     }
 
     await carregarProdutos();
-    onSave?.(); // Fecha o modal
+    onSave?.(); // Fecha o modal após salvar
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose}>X</button>
+    <Dialog.Root open onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className={styles.overlay} />
+        <Dialog.Content className={styles.modal}>
+          <Dialog.Close asChild>
+            <button className={styles.closeBtn} aria-label="Fechar modal">X</button>
+          </Dialog.Close>
 
-        <ProdutoForm
-          initialData={modoEdicao ? produto : null}
-          modoEdicao={modoEdicao}
-          onSubmit={handleSubmit}
-          onCancel={onClose}
-          onSubmitCallback={mostrarSnackbar}
-        />
-      </div>
-    </div>
+          <ProdutoForm
+            initialData={modoEdicao ? produto : null}
+            modoEdicao={modoEdicao}
+            onSubmit={handleSubmit}
+            onCancel={onClose}
+            onSubmitCallback={mostrarSnackbar}
+          />
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
