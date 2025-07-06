@@ -1,0 +1,133 @@
+/* Definindo a paleta de cores como variáveis para fácil reutilização */
+:root {
+  --cor-fundo: #FFFFFF;
+  --cor-texto-principal: #103538;
+  --cor-texto-secundario: #000000;
+  --cor-bege: #dbd09d;
+  --cor-terracota: #d96851;
+  --cor-borda-suave: #E0E0E0;
+}
+
+.paginaCarrinho {
+  background-color: var(--cor-fundo);
+  padding: 2rem 4rem; /* Mais espaço nas laterais */
+  font-family: sans-serif; /* Usar uma fonte padrão, pode ser ajustado depois */
+}
+
+.conteudoPrincipal {
+  display: flex;
+  gap: 3rem; /* Espaço entre as duas colunas */
+  max-width: 1200px;
+  margin: auto;
+}
+
+.listaContainer {
+  flex: 2; /* Faz a coluna de itens ser maior */
+}
+
+.resumoContainer {
+  flex: 1; /* Faz a coluna de resumo ser menor */
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  height: fit-content; /* A altura se ajusta ao conteúdo */
+}
+
+.tituloSecao {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilos de cada item na lista */
+.item {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+.imagemItem {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda-suave);
+}
+
+.infoItem {
+  flex-grow: 1;
+  margin: 0 1.5rem;
+}
+
+.infoItem h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--cor-texto-secundario);
+}
+
+.infoItem p {
+  margin: 0;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+}
+
+.quantidadeControl {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 4px;
+}
+
+.quantidadeControl button {
+  border: none;
+  background: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.quantidadeControl span {
+  padding: 0.5rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Estilos do Resumo */
+.detalheResumo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: var(--cor-texto-secundario);
+}
+
+.divisor {
+  border: none;
+  border-top: 1px solid var(--cor-borda-suave);
+  margin: 1rem 0;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.botaoFinalizar {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--cor-terracota); /* Usando a cor terracota como destaque */
+  color: var(--cor-fundo);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.botaoFinalizar:hover {
+  background-color: #c85a40; /* Um tom um pouco mais escuro para o hover */
+}

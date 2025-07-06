@@ -5,6 +5,7 @@ import { Snackbar, Alert } from "@mui/material";
 import ErrorBoundary from "../ErrorBoundary";
 import useProdutos from "../../hooks/useProdutos";
 import styles from "./Prateleira.module.css";
+import { useCart } from '../../context/CartContext';
 
 /**
  * Componente principal da tela de prateleira de produtos.
@@ -18,6 +19,7 @@ export default function Prateleira() {
     deletarProduto,
     carregarProdutos,
   } = useProdutos();
+   const { addToCart } = useCart();
 
   // Controle dos modais (cadastro e edição)
   const [produtoEditando, setProdutoEditando] = useState(undefined);
@@ -147,7 +149,7 @@ export default function Prateleira() {
               onToggleFavorite={() => handleAlternarFavorito(produto.id)}
               onSetRating={(valor) => handleAlterarNota(produto.id, valor)}
               onBuyClick={() => console.log("Comprar clicado")}
-              onCartClick={() => console.log("Adicionar ao carrinho clicado")}
+              onCartClick={() => addToCart(produto)}
             />
           ))
         ) : (

@@ -1,8 +1,25 @@
-import React from "react";
-import Prateleira from "./components/Prateleira/Prateleira";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header/Header.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import Prateleira from './components/Prateleira/Prateleira.jsx';
+import CarrinhoPage from './pages/CarrinhoPage.jsx';
+import './App.css';
 
-export default function App() {
-  return <>
-    {/* <Prateleira></Prateleira> */}
-  </>;
+function App() {
+  return (
+    <BrowserRouter>
+      <Header />
+
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Prateleira />} />
+          <Route path="/carrinho" element={<CarrinhoPage />} />
+        </Routes>
+      </main>
+
+      <Footer />
+    </BrowserRouter>
+  );
 }
+
+export default App;
