@@ -20,6 +20,10 @@ export default function Header() {
     <header style={headerStyle}>
       <p>[O Header da Melissa vai aqui]</p>
       <nav>
+          <Link to="/perfil" style={linkStyle}>
+             Meu Perfil
+          </Link>
+          <br></br>
         <Link to="/carrinho" style={linkStyle}>
           Ir para o Carrinho (Link de Teste)
         </Link>
