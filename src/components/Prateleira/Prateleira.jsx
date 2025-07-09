@@ -1,148 +1,95 @@
 import React, { useState, useCallback } from "react";
-import CardDisplay from "../CardDisplay/CardDisplay";
-import ModalProduto from "../Modal/ModalProduto";
 import { Snackbar, Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
+import CardDisplay from "../CardDisplay/CardDisplay";
 import ErrorBoundary from "../ErrorBoundary";
 import useProdutos from "../../hooks/useProdutos";
 import styles from "./Prateleira.module.css";
 
-/**
- * Componente principal da tela de prateleira de produtos.
- * Gerencia modais, ações nos produtos e renderização de cards.
- */
 export default function Prateleira() {
+  const navigate = useNavigate();
   const {
     produtos,
-    adicionarProduto,
     editarProduto,
     deletarProduto,
-    carregarProdutos,
   } = useProdutos();
 
-  // Controle dos modais (cadastro e edição)
-  const [produtoEditando, setProdutoEditando] = useState(undefined);
-  const [modoCadastro, setModoCadastro] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
-  // Feedback visual ao usuário (mensagens de sucesso/erro)
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
+  const mostrarSnackbar = (mensagem, tipo = "success") =>
+    setSnackbar({ open: true, message: mensagem, severity: tipo });
 
-  /**
-   * Exibe uma mensagem no snackbar.
-   */
-  const mostrarSnackbar = (mensagem, tipo = "success") => {
-    setSnackbar({
-      open: true,
-      message: mensagem,
-      severity: tipo,
-    });
-  };
-
-  /**
-   * Fecha o snackbar.
-   */
-  const handleFecharSnackbar = () => {
+  const handleFecharSnackbar = () =>
     setSnackbar((estadoAnterior) => ({ ...estadoAnterior, open: false }));
-  };
 
-  /**
-   * Abre o modal de cadastro.
-   */
-  const handleAdicionarClick = () => {
-    setModoCadastro(true);
-  };
+  const handleAdicionarClick = useCallback(() => {
+    navigate("/produto/novo");
+  }, [navigate]);
 
-  /**
-   * Fecha qualquer modal e recarrega os produtos.
-   */
-  const fecharModalEAtualizar = () => {
-    setModoCadastro(false);
-    setProdutoEditando(undefined);
-    carregarProdutos();
-  };
+  const handleEditarProduto = useCallback((produtoId) => {
+    navigate(`/produto/editar/${produtoId}`);
+  }, [navigate]);
 
-  /**
-   * Inicia o modo de edição com o produto selecionado.
-   */
-  const handleEditarProduto = useCallback((produto) => {
-    setProdutoEditando(produto);
-  }, []);
-
-  /**
-   * Exclui o produto e remove ele da prateleira.
-   */
-  const handleExcluirProduto = async (idProduto) => {
+  const handleExcluirProduto = useCallback(async (idProduto) => {
     try {
-      await deletarProduto(idProduto); // já atualiza o estado
+      await deletarProduto(idProduto);
       mostrarSnackbar("Produto excluído com sucesso.");
-    } catch (erro) {
+    } catch {
       mostrarSnackbar("Erro ao excluir produto.", "error");
     }
-  };
+  }, [deletarProduto]);
 
-  /**
-   * Alterna o estado de favorito do produto de forma rápida e salva no backend.
-   */
-  const handleAlternarFavorito = async (idProduto) => {
-    const produtoEncontrado = produtos.find(
-      (produto) => produto.id === idProduto
-    );
-    if (!produtoEncontrado) return;
-
-    const produtoAtualizado = {
-      ...produtoEncontrado,
-      isFavorite: !produtoEncontrado.isFavorite,
-    };
+  const atualizarProduto = useCallback(async (idProduto, novosDados, mensagemSucesso, mensagemErro) => {
     try {
-      // Atualiza o backend e o estado local
-      await editarProduto(idProduto, produtoAtualizado);
-    } catch (erro) {
-      mostrarSnackbar("Erro ao favoritar produto.", "error");
+      await editarProduto(idProduto, novosDados);
+      mostrarSnackbar(mensagemSucesso);
+    } catch {
+      mostrarSnackbar(mensagemErro, "error");
     }
-  };
+  }, [editarProduto]);
 
-  /**
-   * Atualiza a nota do produto de forma rápida e salva no backend.
-   */
-  const handleAlterarNota = async (idProduto, novaNota) => {
-    const produtoEncontrado = produtos.find(
-      (produto) => produto.id === idProduto
-    );
-    if (!produtoEncontrado) return;
-
-    const produtoAtualizado = {
-      ...produtoEncontrado,
-      rating: novaNota,
-    };
-
-    // Atualização rápida local e pesistente no backend
-    try {
-      await editarProduto(idProduto, produtoAtualizado);
-    } catch (erro) {
-      mostrarSnackbar("Erro ao avaliar o produto.", "error");
+  const handleAlternarFavorito = useCallback((idProduto) => {
+    const produto = produtos.find(p => p.id === idProduto);
+    if (produto) {
+      atualizarProduto(
+        idProduto,
+        { ...produto, isFavorite: !produto.isFavorite },
+        "Favorito atualizado!",
+        "Erro ao favoritar produto."
+      );
     }
-  };
+  }, [produtos, atualizarProduto]);
+
+  const handleAlterarNota = useCallback((idProduto, novaNota) => {
+    const produto = produtos.find(p => p.id === idProduto);
+    if (produto) {
+      atualizarProduto(
+        idProduto,
+        { ...produto, rating: novaNota },
+        "Nota atualizada!",
+        "Erro ao avaliar o produto."
+      );
+    }
+  }, [produtos, atualizarProduto]);
 
   return (
     <ErrorBoundary>
-      {/* Cabeçalho com botão de adicionar produto */}
+      {/* Cabeçalho */}
       <div className={styles.header}>
         <button className={styles.btnAdicionar} onClick={handleAdicionarClick}>
           + Adicionar Produto
         </button>
       </div>
 
-      {/* Lista de produtos renderizados */}
+      {/* Lista de produtos */}
       <div className={styles.container}>
         {produtos.length > 0 ? (
           produtos.map((produto) => (
             <CardDisplay
               key={produto.id}
               {...produto}
-              onEditClick={() => handleEditarProduto(produto)}
+              onEditClick={() => handleEditarProduto(produto.id)}
               onDeleteClick={() => handleExcluirProduto(produto.id)}
               onToggleFavorite={() => handleAlternarFavorito(produto.id)}
               onSetRating={(valor) => handleAlterarNota(produto.id, valor)}
@@ -155,43 +102,12 @@ export default function Prateleira() {
         )}
       </div>
 
-      {/* Feedback visual via snackbar */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleFecharSnackbar}
-      >
+      {/* Snackbar de feedback */}
+      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleFecharSnackbar}>
         <Alert onClose={handleFecharSnackbar} severity={snackbar.severity}>
           {snackbar.message}
         </Alert>
       </Snackbar>
-
-      {/* Modal de cadastro de produto */}
-      {modoCadastro && (
-        <ModalProduto
-          modoEdicao={false}
-          onClose={fecharModalEAtualizar}
-          onSave={fecharModalEAtualizar}
-          adicionarProduto={adicionarProduto}
-          editarProduto={editarProduto}
-          carregarProdutos={carregarProdutos}
-          mostrarSnackbar={mostrarSnackbar}
-        />
-      )}
-
-      {/* Modal de edição de produto */}
-      {produtoEditando && (
-        <ModalProduto
-          modoEdicao={true}
-          produto={produtoEditando}
-          onClose={fecharModalEAtualizar}
-          onSave={fecharModalEAtualizar}
-          adicionarProduto={adicionarProduto}
-          editarProduto={editarProduto}
-          carregarProdutos={carregarProdutos}
-          mostrarSnackbar={mostrarSnackbar}
-        />
-      )}
     </ErrorBoundary>
   );
 }
