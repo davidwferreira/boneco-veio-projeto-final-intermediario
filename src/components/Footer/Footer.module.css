@@ -1,0 +1,118 @@
+/*footer*/
+.footer_sec{
+    width: 100vw;
+    background-color: #ededed;
+}
+
+.flex_links_payment{
+    display: flex;
+    padding: 30px 0 10px 0;
+    width: 85%;
+    margin: auto;
+    gap: 4rem;
+}
+
+/*socials*/
+.socials_sec{
+    background-color: var(--color1);
+    padding: 15px 0;
+    box-shadow: 2px 0px 8px rgba(4, 1, 58, 0.313);
+}
+
+.socials_container{
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+    width: 85%;
+    margin: auto;
+}
+
+.socials_container h3{
+    color: var(--color3);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.socials_links ul{
+    display: flex;
+    gap: 4rem;
+}
+
+.socials_links ul li a i{
+    font-size: 1.7rem;
+    color: var(--color3);
+    transition: transform 0.3s ease, border 0.3s ease;
+    border: 2px solid var(--color3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.socials_links ul li a i:hover{
+    transform: scale(1.2);
+    border-style: dotted;
+}
+
+/*links*/
+.links_container{
+    display: flex;
+    gap: 4rem;
+}
+
+.links_container div h2, .payment_container h2, .certificate_container h2{
+    color: var(--color1);
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.links_container div ul li a{
+    color: #444;
+    font-size: .9rem;
+}
+
+.links_container div ul li a:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--color1);
+    text-underline-offset: 3px;
+    text-decoration-style: dotted;
+}
+
+/*payments*/
+.payment_method, .links_container div ul{
+    margin-top: 10px
+}
+
+.payment_method{
+    display: flex;
+    gap: .3rem;
+}
+
+.paymee img{
+    height: 85px;
+    margin-top: 15px;
+    margin-left: -18px;
+}
+
+/*certificate*/
+.certificate_container img{
+    height: 90px;
+    margin-top: 10px;
+    margin-left: -5px;
+}
+
+/*bot*/
+ .bot_container{
+    width: 85%;
+    margin: auto;
+    padding: 0 0 30px 0;
+}
+
+.bot_container p{
+    color: #555;
+    font-size: .75rem;
+    margin-bottom: 20px;
+}
