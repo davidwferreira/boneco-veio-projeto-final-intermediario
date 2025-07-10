@@ -4,14 +4,13 @@ import Header from './components/Header/Header.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Prateleira from './components/Prateleira/Prateleira.jsx';
 import CarrinhoPage from './pages/CarrinhoPage.jsx';
-import CarouselDestaques from './components/CarouselDestaques';
+import CarouselDestaques from './components/CarouselDestaques.jsx';
 import './App.css';
 
 
 function App() {
   return (
     <BrowserRouter>
-      <main className="main-content">
         <Header />
         <CarouselDestaques />
         <Routes>
@@ -19,8 +18,6 @@ function App() {
           <Route path="/" element={<Prateleira />} />
           <Route path="/carrinho" element={<CarrinhoPage />} />
         </Routes>
-      </main>
-
       <Footer />
     </BrowserRouter>
   );
