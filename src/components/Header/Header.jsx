@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import HeaderSearch from './HeaderSearch'
 
 export default function Header() {
   // Estilos temporários para visualização
@@ -18,7 +19,7 @@ export default function Header() {
 
   return (
     <header style={headerStyle}>
-      <p>[O Header da Melissa vai aqui]</p>
+      <HeaderSearch/>
       <nav>
           <Link to="/perfil" style={linkStyle}>
              Meu Perfil

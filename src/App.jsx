@@ -5,6 +5,9 @@ import Footer from './components/Footer/Footer.jsx';
 import Prateleira from './components/Prateleira/Prateleira.jsx';
 import CarrinhoPage from './pages/CarrinhoPage.jsx';
 import './App.css';
+import { useState } from 'react'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (

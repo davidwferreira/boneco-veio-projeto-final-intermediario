@@ -1,15 +1,29 @@
-export default function Footer() {
-  // Estilos temporários para visualização
-  const footerStyle = {
-    padding: '1.5rem',
-    backgroundColor: '#f1f1f1',
-    textAlign: 'center',
-    borderTop: '1px solid #ddd'
-  };
+import React from 'react'
+import styles from './Footer.module.css'
+import FooterSocials from './FooterSocials'
+import FooterLinks from './FooterLinks'
+import FooterPayments from './FooterPayments'
+import FooterCertificate from './FooterCertificate'
+import FooterBot from './FooterBot'
 
+const Footer = () => {
   return (
-    <footer style={footerStyle}>
-      <p>[O Footer da Melissa vai aqui]</p>
-    </footer>
-  );
+    <div className={styles.footer_sec}>
+        <div className={styles.footer_container}>
+          <FooterSocials/>
+          <div className={styles.flex_links_payment}>
+            <FooterLinks/>
+
+            <div>
+              <FooterPayments/>
+              <FooterCertificate/>
+            </div>
+          </div>
+
+          <FooterBot/>
+        </div>
+    </div>
+  )
 }
+
+export default Footer
