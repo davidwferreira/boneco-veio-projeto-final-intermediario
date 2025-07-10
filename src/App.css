@@ -1,8 +1,3 @@
-body{
-  box-sizing: border-box;
-  padding: 20px;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 *{
@@ -11,6 +6,7 @@ body{
   text-decoration: none;
   list-style-type: none;
   font-family: 'Montserrat', sans;
+  box-sizing: border-box;
 }
 
 :root{
@@ -19,5 +15,12 @@ body{
   --color3: #DBD09D;
   --color4: #D8B058;
   --color5: #D96851;
+  --neutral: #ededed;
 }
+
+body{
+  overflow-y: hidden;
+}
+
+
 
