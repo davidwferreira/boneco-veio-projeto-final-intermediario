@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import HeaderSearch from './HeaderSearch'
+import HeaderBot from './HeaderBot'
+import Menu from '../Menu/Menu'
 
 export default function Header() {
   // Estilos temporários para visualização
@@ -20,6 +22,8 @@ export default function Header() {
   return (
     <header style={headerStyle}>
       <HeaderSearch/>
+      <HeaderBot />
+      <Menu/>
       <nav>
           <Link to="/perfil" style={linkStyle}>
              Meu Perfil

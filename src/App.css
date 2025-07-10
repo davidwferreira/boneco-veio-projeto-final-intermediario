@@ -6,6 +6,7 @@
   text-decoration: none;
   list-style-type: none;
   font-family: 'Montserrat', sans;
+  box-sizing: border-box;
 }
 
 :root{
@@ -14,5 +15,12 @@
   --color3: #DBD09D;
   --color4: #D8B058;
   --color5: #D96851;
+  --neutral: #ededed;
 }
+
+body{
+  overflow-y: hidden;
+}
+
+
 
