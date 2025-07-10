@@ -1,20 +1,27 @@
-import React from "react";
+import PerfilPage from './pages/PerfilPage.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Prateleira from "./components/Prateleira/Prateleira";
-import CadastrarProduto from "./components/CadastrarProduto/CadastrarProduto";
-import ProdutoDetalhePage from "./components/ProdutoDetalhePage/ProdutoDetalhePage";
-import EditarProduto from "./components/EditarProduto/EditarProduto";
+import Header from './components/Header/Header.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import Prateleira from './components/Prateleira/Prateleira.jsx';
+import CarrinhoPage from './pages/CarrinhoPage.jsx';
+import './App.css';
 
-
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Prateleira />} />
-            <Route path="/produto/novo" element={<CadastrarProduto/>} />
-            <Route path="/:id" element={<ProdutoDetalhePage/>} />
-            <Route path="/produto/editar/:id" element={<EditarProduto />} />
-          </Routes>
-        </BrowserRouter>
+      <Header />
+
+      <main className="main-content">
+        <Routes>
+          <Route path="/perfil" element={<PerfilPage />} />
+          <Route path="/" element={<Prateleira />} />
+          <Route path="/carrinho" element={<CarrinhoPage />} />
+        </Routes>
+      </main>
+
+      <Footer />
+    </BrowserRouter>
   );
 }
+
+export default App;

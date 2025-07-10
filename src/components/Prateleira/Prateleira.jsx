@@ -6,6 +6,7 @@ import CardDisplay from "../CardDisplay/CardDisplay";
 import ErrorBoundary from "../ErrorBoundary";
 import useProdutos from "../../hooks/useProdutos";
 import styles from "./Prateleira.module.css";
+import { useCart } from '../../context/CartContext';
 
 export default function Prateleira() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Prateleira() {
     editarProduto,
     deletarProduto,
   } = useProdutos();
+   const { addToCart } = useCart();
 
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
@@ -94,7 +96,7 @@ export default function Prateleira() {
               onToggleFavorite={() => handleAlternarFavorito(produto.id)}
               onSetRating={(valor) => handleAlterarNota(produto.id, valor)}
               onBuyClick={() => console.log("Comprar clicado")}
-              onCartClick={() => console.log("Adicionar ao carrinho clicado")}
+              onCartClick={() => addToCart(produto)}
             />
           ))
         ) : (
