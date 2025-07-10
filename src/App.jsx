@@ -4,6 +4,7 @@ import Header from './components/Header/Header.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Prateleira from './components/Prateleira/Prateleira.jsx';
 import CarrinhoPage from './pages/CarrinhoPage.jsx';
+import CarouselDestaques from './components/CarouselDestaques';
 import './App.css';
 
 
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
       <main className="main-content">
         <Header />
+        <CarouselDestaques />
         <Routes>
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/" element={<Prateleira />} />
