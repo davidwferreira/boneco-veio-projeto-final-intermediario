@@ -1,0 +1,27 @@
+.menu_sec{
+    background-color: var(--color2);
+    padding: 20px;
+    margin-bottom: 200px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.331);
+}
+
+.menu_container{
+    width: 70%;
+    margin: auto;
+}
+
+.menu_nav{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+}
+
+.links_menu{
+    color: var(--color1);
+    font-size: 15px;
+}
+
+.current_page{
+    font-weight: 800;
+}
