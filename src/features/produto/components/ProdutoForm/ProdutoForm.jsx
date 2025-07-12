@@ -19,10 +19,10 @@ export default function ProdutoForm({
     previewImagem,
     enviando,
     mensagemFeedback,
-    handleChange,
+    lidarComMudanca,
     calcularPrecoComDesconto,
-    handleSubmit,
-    handleCloseSnackbar,
+    enviarFormulario,
+    fecharSnackbar,
   } = useProdutoForm({ initialData, modoEdicao, onSubmitCallback });
 
   return (
@@ -31,7 +31,7 @@ export default function ProdutoForm({
         className={styles.formulario}
         onSubmit={(evento) => {
           evento.preventDefault();
-          handleSubmit(aoEnviar);
+          enviarFormulario(aoEnviar);
         }}
       >
         <h2 className={styles.formTitle}>
@@ -51,14 +51,12 @@ export default function ProdutoForm({
 
             {!modoEdicao && (
               <div className={styles.inputGroup}>
-                <label htmlFor="imagemArquivo">
-                  Imagem do Produto (arquivo)
-                </label>
+                <label htmlFor="imagemArquivo">Imagem do Produto (arquivo)</label>
                 <input
                   type="file"
                   id="imagemArquivo"
                   name="imagemArquivo"
-                  onChange={handleChange}
+                  onChange={lidarComMudanca}
                   className={styles.input}
                 />
               </div>
@@ -72,7 +70,7 @@ export default function ProdutoForm({
                   id="imagemUrl"
                   name="imagemUrl"
                   value={dadosFormulario.imagemUrl}
-                  onChange={handleChange}
+                  onChange={lidarComMudanca}
                   placeholder="https://exemplo.com/imagem.jpg"
                   className={styles.input}
                 />
@@ -89,7 +87,7 @@ export default function ProdutoForm({
                 id="titulo"
                 name="titulo"
                 value={dadosFormulario.titulo}
-                onChange={handleChange}
+                onChange={lidarComMudanca}
                 placeholder="Título"
                 className={styles.input}
               />
@@ -101,7 +99,7 @@ export default function ProdutoForm({
                 id="descricao"
                 name="descricao"
                 value={dadosFormulario.descricao}
-                onChange={handleChange}
+                onChange={lidarComMudanca}
                 placeholder="Descrição"
                 className={styles.textarea}
               />
@@ -115,7 +113,7 @@ export default function ProdutoForm({
                   id="preco"
                   name="preco"
                   value={dadosFormulario.preco}
-                  onChange={handleChange}
+                  onChange={lidarComMudanca}
                   placeholder="Preço"
                   className={styles.input}
                 />
@@ -128,7 +126,7 @@ export default function ProdutoForm({
                   id="desconto"
                   name="desconto"
                   value={dadosFormulario.desconto}
-                  onChange={handleChange}
+                  onChange={lidarComMudanca}
                   placeholder="Desconto (%)"
                   className={styles.input}
                 />
@@ -150,7 +148,7 @@ export default function ProdutoForm({
                 max="5"
                 step="1"
                 value={dadosFormulario.nota}
-                onChange={handleChange}
+                onChange={lidarComMudanca}
                 className={styles.input}
               />
             </div>
@@ -161,7 +159,7 @@ export default function ProdutoForm({
                   type="checkbox"
                   name="ehNovo"
                   checked={dadosFormulario.ehNovo}
-                  onChange={handleChange}
+                  onChange={lidarComMudanca}
                 />
                 É novidade?
               </label>
@@ -171,7 +169,7 @@ export default function ProdutoForm({
                   type="checkbox"
                   name="favorito"
                   checked={dadosFormulario.favorito}
-                  onChange={handleChange}
+                  onChange={lidarComMudanca}
                 />
                 Favorito
               </label>
@@ -206,11 +204,11 @@ export default function ProdutoForm({
         <Snackbar
           open={mensagemFeedback.open}
           autoHideDuration={4000}
-          onClose={handleCloseSnackbar}
+          onClose={fecharSnackbar}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
-            onClose={handleCloseSnackbar}
+            onClose={fecharSnackbar}
             severity={mensagemFeedback.severity}
             variant="filled"
             sx={{ width: "100%" }}

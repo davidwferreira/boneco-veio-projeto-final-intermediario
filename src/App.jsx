@@ -1,26 +1,15 @@
-import PerfilPage from './pages/PerfilPage.jsx';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header.jsx';
-import Footer from './components/Footer/Footer.jsx';
-import Prateleira from './components/Prateleira/Prateleira.jsx';
-import CarrinhoPage from './pages/CarrinhoPage.jsx';
+// src/App.jsx
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
+import Header from './components/common/Header/Header';
+import Footer from './components/common/Footer/Footer';
+
 import './App.css';
-import EditarProduto from './components/EditarProduto/EditarProduto.jsx';
-import CadastrarProduto from './components/CadastrarProduto/CadastrarProduto.jsx'
-import Home from './pages/Home.jsx';
-import NotFound from './pages/NotFound.jsx';
 
 function App() {
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path="/perfil" element={<PerfilPage />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/produto/editar/:id" element={<EditarProduto />} />
-          <Route path="/produto/novo" element={<CadastrarProduto />} />
-          <Route path="/carrinho" element={<CarrinhoPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

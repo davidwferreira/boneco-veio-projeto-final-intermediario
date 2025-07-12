@@ -6,7 +6,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { formatPrice } from "../../utils/formatPrice";
+import { formatPrice } from "../../../../utils/formatPrice";
 
 import styles from "./CardDisplay.module.css";
 

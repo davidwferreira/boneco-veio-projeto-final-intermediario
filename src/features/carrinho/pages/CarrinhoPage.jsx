@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useCart } from '../context/CartContext';
-import styles from './CarrinhoPage.module.css';
+import { useCart } from '../../../context/CartContext';
+import styles from '../styles/CarrinhoPage.module.css';
 
 export default function CarrinhoPage() {
   const { cartItems } = useCart();

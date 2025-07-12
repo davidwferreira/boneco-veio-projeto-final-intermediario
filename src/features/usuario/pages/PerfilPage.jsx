@@ -1,4 +1,4 @@
-import styles from './PerfilPage.module.css';
+import styles from '../styles/PerfilPage.module.css';
 // No futuro, o logo virá dos assets do projeto
 // import logoBranco from '../../assets/logo-branco.svg';
 

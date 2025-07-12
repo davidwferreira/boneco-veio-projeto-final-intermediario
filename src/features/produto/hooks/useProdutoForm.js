@@ -1,6 +1,6 @@
 // src/hooks/useProdutoForm.js
 import { useState, useEffect } from "react";
-import { uploadImage } from "../services/cloudinary";
+import { uploadImage } from "../../../services/cloudinary";
 
 /**
  * Hook personalizado para controle do formulário de produto.
@@ -38,17 +38,17 @@ export function useProdutoForm({ initialData, modoEdicao = false, onSubmitCallba
     if (initialData) {
       setDadosFormulario({
         imagemArquivo: null,
-        imagemUrl: initialData.imageSrc || "",
-        titulo: initialData.title || "",
-        descricao: initialData.description || "",
-        preco: initialData.originalPrice || "",
-        desconto: initialData.discount || "",
-        ehNovo: !!initialData.isNew,
-        favorito: !!initialData.isFavorite,
-        nota: initialData.rating || 0,
+        imagemUrl: initialData?.imageSrc || "",
+        titulo: initialData?.title || "",
+        descricao: initialData?.description || "",
+        preco: initialData?.originalPrice ?? "",
+        desconto: initialData?.discount ?? "",
+        ehNovo: !!initialData?.isNew,
+        favorito: !!initialData?.isFavorite,
+        nota: initialData?.rating ?? 0,
       });
 
-      setPreviewImagem(initialData.imageSrc || null);
+      setPreviewImagem(initialData?.imageSrc || null);
     }
   }, [initialData]);
 

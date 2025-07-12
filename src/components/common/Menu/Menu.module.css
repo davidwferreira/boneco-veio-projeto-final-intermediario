@@ -1,7 +1,7 @@
 .menu_sec{
     background-color: var(--color2);
     padding: 20px;
-    margin-bottom: 200px;
+    /* margin-bottom: 200px; */
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.331);
 }
 
