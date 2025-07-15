@@ -30,7 +30,7 @@ const HeaderSearch = () => {
 
                 <div className={styles.header_account}>
                     <div className={styles.user_icon}>
-                        <i class="fa-solid fa-user"></i>
+                        <Link to="/perfil"><i class="fa-solid fa-user"></i></Link>
                     </div>
 
                     <div className={styles.account}>

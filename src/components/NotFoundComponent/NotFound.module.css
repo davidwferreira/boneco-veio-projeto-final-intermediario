@@ -6,7 +6,7 @@
 }
 
 .container img{
-    width: 50vw;
+    height: 50vh;
 }
 
 .container button{
@@ -24,4 +24,15 @@
 
 .container button:hover{
     background-color: rgb(158, 71, 10);
+}
+
+@media screen and (max-width: 700px){
+    .container img{
+        height: 30vh;
+    }
+
+    .container button{
+        padding: 6px 12px;
+        font-size: .8rem;
+    }
 }
