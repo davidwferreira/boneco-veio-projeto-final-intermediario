@@ -24,13 +24,13 @@ const HeaderSearch = () => {
 
                     <input type="search" name="searchbar" id="searchbar" />
                     <span>
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i className="fa-solid fa-magnifying-glass"></i>
                     </span>
                 </div>
 
                 <div className={styles.header_account}>
                     <div className={styles.user_icon}>
-                        <Link to="/perfil"><i class="fa-solid fa-user"></i></Link>
+                        <i className="fa-solid fa-user"></i>
                     </div>
 
                     <div className={styles.account}>
@@ -41,7 +41,7 @@ const HeaderSearch = () => {
 
                 <div className={styles.cart}>
                     <Link to="/carrinho">
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
                 </div>
             </div>

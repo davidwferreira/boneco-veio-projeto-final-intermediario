@@ -7,6 +7,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  getDoc
 } from "firebase/firestore";
 
 /**
@@ -52,4 +53,14 @@ export async function atualizarProduto(id, dadosAtualizados) {
 export async function removerProduto(id) {
   const ref = doc(db, "produtos", id);
   await deleteDoc(ref);
+}
+
+export async function getProdutoPorId(id) {
+  const ref = doc(db, "produtos", id);
+  const snap = await getDoc(ref);
+  if (snap.exists()) {
+    return { id: snap.id, ...snap.data() };
+  } else {
+    throw new Error("Produto não encontrado");
+  }
 }

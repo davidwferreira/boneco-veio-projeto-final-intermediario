@@ -82,7 +82,8 @@ export default function CardDisplay({
       {/* Título e descrição */}
       <div className={styles.cardContent}>
         <h1 className={styles.title}>{title}</h1>
-        <p className={styles.description}>{description}</p>
+        {/* ocultar o descrição */}
+        {/* <p className={styles.description}>{description}</p> */} 
       </div>
 
       {/* Preço atual e original */}

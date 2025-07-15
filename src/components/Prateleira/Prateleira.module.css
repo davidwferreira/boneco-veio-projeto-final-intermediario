@@ -9,8 +9,8 @@
   --raio-botao: 8px;
   --padding-botao: 10px 20px;
 
-  --gap-grid: 32px;
-  --padding-grid: 40px;
+  --gap-grid: 20px;
+  --padding-grid: 20px;
 }
 
 .container {

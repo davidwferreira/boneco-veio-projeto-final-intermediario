@@ -6,187 +6,219 @@ import styles from "./ProdutoForm.module.css";
 
 /**
  * Formulário visual reutilizável para cadastro e edição de produtos.
- * Usa um hook para controlar os campos, validações e feedbacks.
  */
 export default function ProdutoForm({
-  initialData,            // Dados do produto (para edição)
-  onSubmit: aoEnviar,     // Função chamada ao enviar
-  onCancel,               // Função chamada ao cancelar/fechar
-  modoEdicao = false,     // Modo de edição ou cadastro
-  onSubmitCallback,       // Callback após o envio do formulário
+  initialData,
+  onSubmit: aoEnviar,
+  onCancel,
+  modoEdicao = false,
+  onSubmitCallback,
 }) {
   const {
     dadosFormulario,
     previewImagem,
     enviando,
     mensagemFeedback,
-    lidarComMudanca,
+    handleChange,
     calcularPrecoComDesconto,
-    enviarFormulario,
-    fecharSnackbar,
-    
-  } = useProdutoForm({ initialData, modoEdicao, onSubmitCallback});
+    handleSubmit,
+    handleCloseSnackbar,
+  } = useProdutoForm({ initialData, modoEdicao, onSubmitCallback });
 
   return (
-    <form
-      className={styles.formCard}
-      onSubmit={(evento) => {
-        evento.preventDefault();           // Impede reload da página
-        enviarFormulario(aoEnviar, onSubmitCallback);   // Envia os dados formatados
-      }}
-    >
-      <h2 className={styles.formTitle}>
-        {modoEdicao ? "Editar Produto" : "Cadastrar Produto"}
-      </h2>
-
-      {/* Imagem: Upload (cadastro) ou URL (edição) */}
-      {!modoEdicao && (
-        <input
-          type="file"
-          name="imagemArquivo"
-          onChange={lidarComMudanca}
-          className={styles.input}
-        />
-      )}
-
-      {modoEdicao && (
-        <input
-          type="text"
-          name="imagemUrl"
-          value={dadosFormulario.imagemUrl}
-          onChange={lidarComMudanca}
-          placeholder="Imagem (URL)"
-          className={styles.input}
-        />
-      )}
-
-      {previewImagem && (
-        <img
-          src={previewImagem}
-          alt="Pré-visualização"
-          className={styles.imagePreview}
-        />
-      )}
-
-      {/* Título e descrição */}
-      <input
-        type="text"
-        name="titulo"
-        value={dadosFormulario.titulo}
-        onChange={lidarComMudanca}
-        placeholder="Título"
-        className={styles.input}
-      />
-
-      <textarea
-        name="descricao"
-        value={dadosFormulario.descricao}
-        onChange={lidarComMudanca}
-        placeholder="Descrição"
-        rows="3"
-        className={styles.textarea}
-      />
-
-      {/* Preço e desconto */}
-      <input
-        type="number"
-        name="preco"
-        value={dadosFormulario.preco}
-        onChange={lidarComMudanca}
-        placeholder="Preço"
-        className={styles.input}
-      />
-
-      <input
-        type="number"
-        name="desconto"
-        value={dadosFormulario.desconto}
-        onChange={lidarComMudanca}
-        placeholder="Desconto (%)"
-        className={styles.input}
-      />
-
-      <div className={styles.resultadoBox}>
-        <span>Preço com Desconto:</span>
-        <strong>{calcularPrecoComDesconto()}</strong>
-      </div>
-
-      {/* Avaliação */}
-      <div className={styles.sliderBox}>
-        <label>Nota</label>
-        <input
-          type="range"
-          name="nota"
-          min="0"
-          max="5"
-          step="1"
-          value={dadosFormulario.nota}
-          onChange={lidarComMudanca}
-          className={styles.slider}
-        />
-      </div>
-
-      {/* Checkboxes */}
-      <div className={styles.checkboxBox}>
-        <label>
-          <input
-            type="checkbox"
-            name="ehNovo"
-            checked={dadosFormulario.ehNovo}
-            onChange={lidarComMudanca}
-          />
-          É novidade?
-        </label>
-
-        <label>
-          <input
-            type="checkbox"
-            name="favorito"
-            checked={dadosFormulario.favorito}
-            onChange={lidarComMudanca}
-          />
-          Favorito
-        </label>
-      </div>
-
-      {/* Botões */}
-      <div className={styles.buttonGroup}>
-        <button
-          type="submit"
-          className={styles.submitButton}
-          disabled={enviando}
-        >
-          {enviando
-            ? "Salvando..."
-            : modoEdicao
-            ? "Salvar Alterações"
-            : "Cadastrar"}
-        </button>
-
-        {onCancel && (
-          <button
-            type="button"
-            className={styles.cancelButton}
-            onClick={onCancel}
-          >
-            Cancelar
-          </button>
-        )}
-      </div>
-
-      {/* Feedback com Snackbar */}
-      <Snackbar
-        open={mensagemFeedback.open}
-        autoHideDuration={3000}
-        onClose={fecharSnackbar}
+    <div className={styles.pageWrapper}>
+      <form
+        className={styles.formulario}
+        onSubmit={(evento) => {
+          evento.preventDefault();
+          handleSubmit(aoEnviar);
+        }}
       >
-        <Alert
-          onClose={fecharSnackbar}
-          severity={mensagemFeedback.severity}
+        <h2 className={styles.formTitle}>
+          {modoEdicao ? "Editar Produto" : "Cadastrar Produto"}
+        </h2>
+
+        <div className={styles.formSplitLayout}>
+          {/* Imagem */}
+          <div className={styles.imagemWrapper}>
+            {previewImagem && (
+              <img
+                src={previewImagem}
+                alt="Pré-visualização"
+                className={styles.imagePreview}
+              />
+            )}
+
+            {!modoEdicao && (
+              <div className={styles.inputGroup}>
+                <label htmlFor="imagemArquivo">
+                  Imagem do Produto (arquivo)
+                </label>
+                <input
+                  type="file"
+                  id="imagemArquivo"
+                  name="imagemArquivo"
+                  onChange={handleChange}
+                  className={styles.input}
+                />
+              </div>
+            )}
+
+            {modoEdicao && (
+              <div className={styles.inputGroup}>
+                <label htmlFor="imagemUrl">Imagem do Produto (URL)</label>
+                <input
+                  type="text"
+                  id="imagemUrl"
+                  name="imagemUrl"
+                  value={dadosFormulario.imagemUrl}
+                  onChange={handleChange}
+                  placeholder="https://exemplo.com/imagem.jpg"
+                  className={styles.input}
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Campos */}
+          <div className={styles.camposWrapper}>
+            <div className={styles.inputGroup}>
+              <label htmlFor="titulo">Título</label>
+              <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                value={dadosFormulario.titulo}
+                onChange={handleChange}
+                placeholder="Título"
+                className={styles.input}
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="descricao">Descrição</label>
+              <textarea
+                id="descricao"
+                name="descricao"
+                value={dadosFormulario.descricao}
+                onChange={handleChange}
+                placeholder="Descrição"
+                className={styles.textarea}
+              />
+            </div>
+
+            <div className={styles.grid2}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="preco">Preço</label>
+                <input
+                  type="number"
+                  id="preco"
+                  name="preco"
+                  value={dadosFormulario.preco}
+                  onChange={handleChange}
+                  placeholder="Preço"
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label htmlFor="desconto">Desconto (%)</label>
+                <input
+                  type="number"
+                  id="desconto"
+                  name="desconto"
+                  value={dadosFormulario.desconto}
+                  onChange={handleChange}
+                  placeholder="Desconto (%)"
+                  className={styles.input}
+                />
+              </div>
+            </div>
+
+            <div className={styles.resultadoBox}>
+              <span>Preço com Desconto:</span>
+              <strong>{calcularPrecoComDesconto()}</strong>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="nota">Nota</label>
+              <input
+                type="number"
+                name="nota"
+                id="nota"
+                min="0"
+                max="5"
+                step="1"
+                value={dadosFormulario.nota}
+                onChange={handleChange}
+                className={styles.input}
+              />
+            </div>
+
+            <div className={styles.checkboxBox}>
+              <label>
+                <input
+                  type="checkbox"
+                  name="ehNovo"
+                  checked={dadosFormulario.ehNovo}
+                  onChange={handleChange}
+                />
+                É novidade?
+              </label>
+
+              <label>
+                <input
+                  type="checkbox"
+                  name="favorito"
+                  checked={dadosFormulario.favorito}
+                  onChange={handleChange}
+                />
+                Favorito
+              </label>
+            </div>
+
+            <div className={styles.buttonGroup}>
+              <button
+                type="submit"
+                className={styles.submitButton}
+                disabled={enviando}
+              >
+                {enviando
+                  ? "Salvando..."
+                  : modoEdicao
+                  ? "Salvar Alterações"
+                  : "Cadastrar"}
+              </button>
+
+              {onCancel && (
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={onCancel}
+                >
+                  Cancelar
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <Snackbar
+          open={mensagemFeedback.open}
+          autoHideDuration={4000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-          {mensagemFeedback.message}
-        </Alert>
-      </Snackbar>
-    </form>
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={mensagemFeedback.severity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {mensagemFeedback.message}
+          </Alert>
+        </Snackbar>
+      </form>
+    </div>
   );
 }

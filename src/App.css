@@ -18,5 +18,9 @@
   --neutral: #ededed;
 }
 
+body{
+  overflow-y: auto;
+}
+
 
 

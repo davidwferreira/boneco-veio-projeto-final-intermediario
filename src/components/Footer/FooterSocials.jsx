@@ -12,22 +12,22 @@ const FooterSocials = () => {
                     <ul>
                         <li>
                             <a href="https://www.instagram.com/" target='_blank'>
-                                <i class="fa-brands fa-instagram"></i>
+                                <i className="fa-brands fa-instagram"></i>
                             </a>
                         </li>
                         <li>
                             <a href="https://www.facebook.com/" target='_blank'>
-                                <i class="fa-brands fa-facebook"></i>
+                                <i className="fa-brands fa-facebook"></i>
                             </a>
                         </li>
                         <li>
                             <a href="https://www.youtube.com/" target='_blank'>
-                                <i class="fa-brands fa-youtube"></i>
+                                <i className="fa-brands fa-youtube"></i>
                             </a>
                         </li>
                         <li>
                             <a href="https://www.tiktok.com/" target='_blank'>
-                                <i class="fa-brands fa-tiktok"></i>
+                                <i className="fa-brands fa-tiktok"></i>
                             </a>
                         </li>
                     </ul>

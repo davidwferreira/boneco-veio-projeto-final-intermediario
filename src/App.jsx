@@ -1,24 +1,28 @@
-import Prateleira from "./components/Prateleira/Prateleira";
-import { useState } from 'react';
-import './App.css';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import PerfilPage from './pages/PerfilPage.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NotFound from './pages/NotFound';
-import Home from './pages/Home';
+import Header from './components/Header/Header.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import Prateleira from './components/Prateleira/Prateleira.jsx';
+import CarrinhoPage from './pages/CarrinhoPage.jsx';
+import './App.css';
+import EditarProduto from './components/EditarProduto/EditarProduto.jsx';
+import CadastrarProduto from './components/CadastrarProduto/CadastrarProduto.jsx'
+import Home from './pages/Home.jsx';
+import NotFound from './pages/NotFound.jsx';
 
-
-export default function App() {
+function App() {
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="*" element={<NotFound/>} />
-            
+          <Route path="/perfil" element={<PerfilPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/produto/editar/:id" element={<EditarProduto />} />
+          <Route path="/produto/novo" element={<CadastrarProduto />} />
+          <Route path="/carrinho" element={<CarrinhoPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-
-      </BrowserRouter>
-    </>
-  )
+    </BrowserRouter>
+  );
 }
+
+export default App;
