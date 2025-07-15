@@ -6,7 +6,7 @@ import { uploadImage } from "../services/cloudinary";
  * Hook personalizado para controle do formulário de produto.
  * Lida com estado interno, validação, preview de imagem e envio.
  */
-export function useProdutoForm({ initialData, modoEdicao = false, onSubmitCallback}) {
+export function useProdutoForm({ initialData, modoEdicao = false, onSubmitCallback }) {
   // Estado dos campos do formulário
   const [dadosFormulario, setDadosFormulario] = useState({
     imagemArquivo: null,
@@ -43,8 +43,8 @@ export function useProdutoForm({ initialData, modoEdicao = false, onSubmitCallba
         descricao: initialData.description || "",
         preco: initialData.originalPrice || "",
         desconto: initialData.discount || "",
-        ehNovo: !!initialData.isNew,
-        favorito: !!initialData.isFavorite,
+        ehNovo: initialData.isNew === true,
+        favorito: initialData.isFavorite === true,
         nota: initialData.rating || 0,
       });
 
