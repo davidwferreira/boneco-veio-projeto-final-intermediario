@@ -1,13 +1,16 @@
+import React from 'react'
 import HeaderSearch from './HeaderSearch'
 import HeaderBot from './HeaderBot'
 import Menu from '../Menu/Menu'
 
-export default function Header() {
+const Header = () => {
   return (
-    <>
-      <HeaderSearch/>
-      <HeaderBot />
-      <Menu/>
-    </>
-  );
+    <div>
+        <HeaderSearch/>
+        <HeaderBot />
+        <Menu/>
+    </div>
+  )
 }
+
+export default Header
