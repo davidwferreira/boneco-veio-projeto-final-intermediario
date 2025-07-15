@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './HomeSection.module.css';
-import backgroundImage from '../../assets/home-background.jpg'; 
+import backgroundImage from '../../assets/image/11.webp'; 
 
 const HomeSection = () => {
   return (
