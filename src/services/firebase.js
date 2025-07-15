@@ -20,6 +20,10 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_ID,
 };
 
+console.log("🔥 AMBIENTE:", import.meta.env.MODE);
+console.log("🔥 projectId:", import.meta.env.VITE_PROJECT_ID);
+
+
 export const app = initializeApp(firebaseConfig);
 // Força Firestore a usar long-polling, o que evita o erro de WebChannel
 const db = initializeFirestore(app, {
