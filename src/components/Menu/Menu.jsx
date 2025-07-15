@@ -18,7 +18,7 @@ const Menu = () => {
   return (
     <section className={styles.menu_sec}>
       <div className={styles.menu_bars}  onClick={handleMenu}>
-        <i class="fa-solid fa-bars"></i>
+        <i className="fa-solid fa-bars"></i>
       </div>
       <div className={styles.menu_container}>
         <nav className={menuAtivo === true ? `${styles.menu_nav} ${styles.active}` : styles.menu_nav}>
