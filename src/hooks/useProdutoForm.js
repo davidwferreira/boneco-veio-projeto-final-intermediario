@@ -1,4 +1,3 @@
-// src/hooks/useProdutoForm.js
 import { useState, useEffect } from "react";
 import { uploadImage } from "../services/cloudinary";
 

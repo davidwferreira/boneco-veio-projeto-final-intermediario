@@ -1,4 +1,3 @@
-// src/hooks/useProdutos.js
 import { useState, useEffect } from "react";
 import {
   listarProdutos,
