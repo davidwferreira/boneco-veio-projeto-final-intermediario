@@ -1,4 +1,3 @@
-/* src/pages/ProdutoDetalhePage.module.css */
 
 :root {
   --cor-fundo: #ffffff;
@@ -91,6 +90,22 @@ button {
 }
 
 button:hover {
-  background-color: var(--cor-preco);
+  background-color: var(--cor-destaque-suave);
   color: white;
+}
+
+.voltarContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.chipGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.avaliacao {
+  font-size: 1.1rem;
+  color: #f4b400;
 }

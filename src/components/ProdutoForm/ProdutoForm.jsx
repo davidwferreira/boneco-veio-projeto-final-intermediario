@@ -15,7 +15,7 @@ export default function ProdutoForm({
     previewImagem,
     enviando,
     mensagemFeedback,
-    lidarComMudanca, // <- nome correto
+    lidarComMudanca, 
     calcularPrecoComDesconto,
     enviarFormulario,
     fecharSnackbar,

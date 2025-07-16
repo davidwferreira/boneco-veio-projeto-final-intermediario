@@ -28,35 +28,58 @@ export default function ProdutoDetalhePage() {
   if (carregando) return <p>Carregando...</p>;
   if (!produto) return <p>Produto não encontrado.</p>;
 
+  const precoComDesconto = produto.discount
+    ? (produto.price * (1 - produto.discount / 100)).toFixed(2)
+    : null;
+
   return (
     <div className={styles.page}>
-      <button onClick={() => navigate("/")}>← Voltar</button>
+      <div className={styles.voltarContainer}>
+        <button onClick={() => navigate("/")} aria-label="Voltar para página inicial">
+          ← Voltar
+        </button>
+      </div>
 
       <div className={styles.cardDetalhado}>
         <img
-          src={produto.imageSrc}
-          alt={produto.title}
+          src={produto.imageSrc || "/fallback.jpg"}
+          alt={`Imagem do produto ${produto.title}`}
           className={styles.imagemGrande}
+          onError={(e) => (e.target.src = "/fallback.jpg")}
         />
 
         <div className={styles.info}>
           <h1>{produto.title}</h1>
           <p>{produto.description}</p>
-          <p>
-            <strong>Preço:</strong> R$ {produto.price}
-          </p>
-          {produto.discount && (
+
+          {produto.discount ? (
+            <>
+              <p>
+                <strong>Preço original:</strong> R$ {produto.price}
+              </p>
+              <p>
+                <strong>Desconto:</strong> {produto.discount}%
+              </p>
+              <p>
+                <strong>Preço com desconto:</strong> R$ {precoComDesconto}
+              </p>
+            </>
+          ) : (
             <p>
-              <strong>Desconto:</strong> {produto.discount}%
+              <strong>Preço:</strong> R$ {produto.price}
             </p>
           )}
+
           {produto.rating && (
-            <p>
+            <p className={styles.avaliacao}>
               <strong>Avaliação:</strong> {produto.rating} estrelas
             </p>
           )}
-          {produto.isNew && <p className={styles.chip}>Novidade</p>}
-          {produto.isFavorite && <p className={styles.chip}>Favorito</p>}
+
+          <div className={styles.chipGroup}>
+            {produto.isNew && <span className={styles.chip}>Novidade</span>}
+            {produto.isFavorite && <span className={styles.chip}>Favorito</span>}
+          </div>
         </div>
       </div>
     </div>
