@@ -21,7 +21,7 @@ export default function CadastrarProduto() {
       <ProdutoForm
         modoEdicao={false}
         onSubmit={handleSubmit}
-        onCancel={() => navigate("/")}
+        onCancel={() => navigate("/produtos")}
       />
     </div>
   );

@@ -33,7 +33,7 @@ export default function EditarProduto() {
     try {
       await editarProduto(id, produtoData);
       await carregarProdutos();
-      navigate("/");
+      navigate("/produtos");
     } catch (error) {
       console.error("Erro ao salvar:", error);
       // O feedback já é tratado no hook via Snackbar
@@ -48,7 +48,7 @@ export default function EditarProduto() {
         initialData={produto}
         modoEdicao={true}
         onSubmit={handleSubmit}
-        onCancel={() => navigate("/")}
+        onCancel={() => navigate("/produtos")}
       />
     </div>
   );
