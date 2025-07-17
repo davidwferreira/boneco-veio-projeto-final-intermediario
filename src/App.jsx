@@ -7,6 +7,7 @@ import './App.css';
 import EditarProduto from './components/EditarProduto/EditarProduto.jsx';
 import CadastrarProduto from './components/CadastrarProduto/CadastrarProduto.jsx'
 import Login from './components/Login/Login.jsx';
+import Emconstrucao from './components/EmConstrucao/Emconstrucao.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 
@@ -22,6 +23,10 @@ function App() {
           <Route path="/produto/editar/:id" element={<EditarProduto />} />
           <Route path="/produto/novo" element={<CadastrarProduto />} />
           <Route path="/carrinho" element={<CarrinhoPage />} />
+          <Route path="/pedidos" element={<Emconstrucao />} />
+          <Route path="/rastreio" element={<Emconstrucao />} />
+          <Route path="/contato" element={<Emconstrucao />} />
+          <Route path="/endereco" element={<Emconstrucao />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>

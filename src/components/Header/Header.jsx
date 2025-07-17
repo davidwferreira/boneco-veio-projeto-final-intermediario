@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div>
         <HeaderSearch/>
-        <HeaderBot />
+        {/* <HeaderBot /> */}
         <Menu/>
     </div>
   )
