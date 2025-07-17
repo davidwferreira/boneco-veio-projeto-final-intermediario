@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
+import {useEffect, useState, useCallback } from "react";
 import { Snackbar, Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import CardDisplay from "../CardDisplay/CardDisplay";
 import ErrorBoundary from "../ErrorBoundary";
@@ -93,6 +93,14 @@ export default function Prateleira() {
     },
     [produtos, atualizarProduto]
   );
+
+  const location = useLocation();
+  useEffect(() => {
+      if (location.state?.mensagem) {
+        mostrarSnackbar(location.state.mensagem, location.state.tipo || "success");
+        window.history.replaceState({}, document.title); // limpa state
+      }
+    }, [location.state]);
 
   return (
     <ErrorBoundary>

@@ -42,10 +42,10 @@ export default function ProdutoDetalhePage() {
 
       <div className={styles.cardDetalhado}>
         <img
-          src={produto.imageSrc || "/fallback.jpg"}
+          src={produto.imageSrc || "../assets/image/fallback.jpg"}
           alt={`Imagem do produto ${produto.title}`}
           className={styles.imagemGrande}
-          onError={(e) => (e.target.src = "/fallback.jpg")}
+          onError={(e) => (e.target.src = "../assets/image/fallback.jpg")}
         />
 
         <div className={styles.info}>

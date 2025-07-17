@@ -33,7 +33,9 @@ export default function EditarProduto() {
     try {
       await editarProduto(id, produtoData);
       await carregarProdutos();
-      navigate("/produtos");
+      navigate("/produtos", {
+        state: { mensagem: "Produto atualizado com sucesso!", tipo: "success" },
+      });
     } catch (error) {
       console.error("Erro ao salvar:", error);
       // O feedback já é tratado no hook via Snackbar
