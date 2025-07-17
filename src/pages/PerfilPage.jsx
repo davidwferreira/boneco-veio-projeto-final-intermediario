@@ -1,6 +1,7 @@
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import styles from './PerfilPage.module.css';
+import imagemProduto from '../assets/image/15.webp'; // Placeholder para a imagem do produto
 // No futuro, o logo virá dos assets do projeto
 // import logoBranco from '../../assets/logo-branco.svg';
 
@@ -50,7 +51,7 @@ export default function PerfilPage() {
             <div className={styles.pedidoBody}>
               <div className={styles.produtoInfo}>
                 <img 
-                  src="src/assets/image/15.webp" // Placeholder para a imagem do produto
+                  src={imagemProduto}
                   alt="Nome do Produto" 
                   className={styles.produtoImagem}
                 />
