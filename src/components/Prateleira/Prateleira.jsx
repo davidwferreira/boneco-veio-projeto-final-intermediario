@@ -106,9 +106,9 @@ export default function Prateleira() {
     <ErrorBoundary>
       {/* Cabeçalho */}
       <div className={styles.header}>
-        <button className={styles.btnVoltar} onClick={handleVoltarHome}>
+        {/* <button className={styles.btnVoltar} onClick={handleVoltarHome}>
           ⬅ Voltar para Home
-        </button>
+        </button> */}
         <button className={styles.btnAdicionar} onClick={handleAdicionarClick}>
           + Adicionar Produto
         </button>
@@ -126,7 +126,11 @@ export default function Prateleira() {
               onToggleFavorite={() => handleAlternarFavorito(produto.id)}
               onSetRating={(valor) => handleAlterarNota(produto.id, valor)}
               onBuyClick={() => console.log("Comprar clicado")}
-              onCartClick={() => addToCart(produto)}
+              onCartClick={() => {
+                addToCart(produto);
+                mostrarSnackbar("Produto adicionado ao carrinho!");
+              }}
+
             />
           ))
         ) : (

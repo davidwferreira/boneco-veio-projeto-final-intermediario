@@ -32,9 +32,6 @@ export default function CardDisplay({
   onSetRating = () => {},
 }) {    
   const navigate = useNavigate();
-  function irParaDetalhes() {
-    navigate(`/produto/${id}`);
-  }
 
   return (
     <div className={styles.card}
@@ -118,7 +115,7 @@ export default function CardDisplay({
           </button>
           <button className={styles.cartButton} onClick={(e) => {
               e.stopPropagation();
-              onCartClick;
+              onCartClick();
             }}>
             <img
               src="/icons/Linear.svg"
