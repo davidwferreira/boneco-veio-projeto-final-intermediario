@@ -6,6 +6,7 @@ import ProdutoDetalhePage from './components/ProdutoDetalhePage/ProdutoDetalhePa
 import './App.css';
 import EditarProduto from './components/EditarProduto/EditarProduto.jsx';
 import CadastrarProduto from './components/CadastrarProduto/CadastrarProduto.jsx'
+import Login from './components/Login/Login.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 
@@ -14,6 +15,7 @@ function App() {
     <BrowserRouter>
         <Routes>
           <Route path="/perfil" element={<PerfilPage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/produtos" element={<PrateleiraPage />} />
           <Route path="/produtos/:id" element={<ProdutoDetalhePage />} />

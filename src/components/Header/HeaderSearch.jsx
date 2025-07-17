@@ -35,7 +35,7 @@ const HeaderSearch = () => {
 
                     <div className={styles.account}>
                         <span>Olá, bem vindo(a)!</span>
-                        <Link to="/perfil">Entre ou cadastre-se</Link>
+                        <Link to="/login">Entre ou cadastre-se</Link>
                     </div>
                 </div>
 
