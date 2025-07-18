@@ -3,7 +3,7 @@ import iracemas from "../../../src/assets/image/7.webp"
 import patrulha from "../../../src/assets/image/10.webp"
 import padre from "../../../src/assets/image/11.webp"
 import { Link } from "react-router-dom";
-import styli from "../HomeSection2/HomeSection2.module.css"; // Importe seu arquivo CSS Module
+import styli from "../HomeSection2/HomeSection2.module.css"; 
 
 function Destaque() {
   const destaqueCardsData = [
