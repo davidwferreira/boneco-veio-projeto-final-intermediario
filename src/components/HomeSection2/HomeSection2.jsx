@@ -4,6 +4,7 @@ import patrulha from "../../../src/assets/image/10.webp"
 import padre from "../../../src/assets/image/11.webp"
 import { Link } from "react-router-dom";
 import styli from "../HomeSection2/HomeSection2.module.css"; 
+import Section from "../../../src/components/Section/Section";
 
 function Destaque() {
   const destaqueCardsData = [
@@ -31,7 +32,7 @@ function Destaque() {
   ];
 
   return (
-    <>
+    <Section title='Promoções' titleAlign='center' link={true}>
       <div className={styli.containerDestaque}>
         {destaqueCardsData.map((cardData, index) => (
           <div
@@ -57,7 +58,7 @@ function Destaque() {
           </div>
         ))}
       </div>
-    </>
+    </Section>
   );
 }
 

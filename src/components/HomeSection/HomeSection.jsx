@@ -6,6 +6,7 @@ import monumentos from '../../assets/image/4.webp';
 import santos from '../../assets/image/11.webp';
 import { Link } from 'react-router-dom';
 import styles from './HomeSection.module.css'; 
+import Section  from '../../../src/components/Section/Section'
 
 function Colecoes() {
   const colecaoDestaque = [
@@ -37,6 +38,7 @@ function Colecoes() {
   ];
 
   return (
+    <Section title='Destaques' titleAlign='center' link={true}>
     <div className={styles.containerPrincipal}> 
       {colecaoDestaque.map((item, idx) => (
         <div key={idx} className={styles.itemColecao}> 
@@ -55,6 +57,7 @@ function Colecoes() {
         </div>
       ))}
     </div>
+    </Section>
   );
 }
 
