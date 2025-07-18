@@ -1,22 +1,61 @@
 import React from 'react';
-import styles from './HomeSection.module.css';
-import backgroundImage from '../../assets/image/11.webp'; 
+import areia from '../../assets/image/6.webp';
+import escritor from '../../assets/image/9.webp';
+import mitologia from '../../assets/image/8.webp';
+import monumentos from '../../assets/image/4.webp';
+import santos from '../../assets/image/11.webp';
+import { Link } from 'react-router-dom';
+import styles from './HomeSection.module.css'; 
 
-const HomeSection = () => {
+function Colecoes() {
+  const colecaoDestaque = [
+    {
+      imagemSrc: areia,
+      altImagem: 'imagem de arte em areia',
+      titulo: 'Arte em Areia',
+    },
+    {
+      imagemSrc: mitologia,
+      altImagem: 'imagem de iracema',
+      titulo: 'Mitologia',
+    },
+    {
+      imagemSrc: escritor, 
+      altImagem: 'imagem de escritor', 
+      titulo: 'Escritor', 
+    },
+    {
+      imagemSrc: santos,
+      altImagem: 'imagem de santo',
+      titulo: 'Santos',
+    },
+    {
+      imagemSrc: monumentos,
+      altImagem: 'imagem de monumento',
+      titulo: 'Monumentos',
+    },
+  ];
+
   return (
-    <section 
-      className={styles.homeSection} 
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <div className={styles.overlay}>
-        <h1 className={styles.title}>Bem-vindo ao Nosso Mundo!</h1>
-        <p className={styles.description}>
-          Descubra os produtos mais incríveis e ofertas exclusivas que preparamos para você.
-        </p>
-        <a href="/cadastro" className={styles.registerLink}>Cadastre-se Agora</a>
-      </div>
-    </section>
+    <div className={styles.containerPrincipal}> 
+      {colecaoDestaque.map((item, idx) => (
+        <div key={idx} className={styles.itemColecao}> 
+          <div className={styles.circuloImagem}> 
+            <img
+              src={item.imagemSrc}
+              alt={item.altImagem}
+              className={styles.imagemProduto}/> 
+            
+          </div>
+          <Link>
+            <div className={styles.tituloProduto}> 
+              <h3>{item.titulo}</h3>
+            </div>
+          </Link>
+        </div>
+      ))}
+    </div>
   );
-};
+}
 
-export default HomeSection;
+export default Colecoes;
