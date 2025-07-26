@@ -33,7 +33,9 @@ export default function EditarProduto() {
     try {
       await editarProduto(id, produtoData);
       await carregarProdutos();
-      // navigate("/produtos");
+      navigate("/produtos", {
+        state: { mensagem: "Produto atualizado com sucesso!", tipo: "success" },
+      });
     } catch (error) {
       console.error("Erro ao salvar:", error);
       // O feedback já é tratado no hook via Snackbar
@@ -49,10 +51,6 @@ export default function EditarProduto() {
         modoEdicao={true}
         onSubmit={handleSubmit}
         onCancel={() => navigate("/produtos")}
-        onSubmitCallback={(mensagem) => {
-          // Callback após salvar com sucesso
-          navigate("/produtos", { state: { mensagem } });
-        }}
       />
     </div>
   );

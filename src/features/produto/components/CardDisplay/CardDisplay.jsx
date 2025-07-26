@@ -1,4 +1,3 @@
-// src/components/CardDisplay/CardDisplay.jsx
 import { IconButton, Box, CardMedia } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -15,9 +14,9 @@ import styles from "./CardDisplay.module.css";
  * Exibe imagem, título, preço, desconto, tags, nota, ações (editar/excluir).
  */
 export default function CardDisplay({
+  id,
   imageSrc,
   title,
-  description,
   rating = 0,
   isFavorite = false,
   isNew = false,
@@ -31,9 +30,14 @@ export default function CardDisplay({
   onDeleteClick = () => {},
   onToggleFavorite = () => {},
   onSetRating = () => {},
-}) {
+}) {    
+  const navigate = useNavigate();
+
   return (
-    <div className={styles.card}>
+    <div className={styles.card}
+      onClick={() => navigate(`/produtos/${id}`)}
+      style={{ cursor: "pointer" }}
+    >
       
       {/* Topo: tags e botão de favorito */}
       <Box className={styles.topBox}>
@@ -43,7 +47,10 @@ export default function CardDisplay({
         </Box>
 
         <IconButton
-          onClick={onToggleFavorite}
+          onClick={(e) => {
+            e.stopPropagation();     // Impede a navegação
+            onToggleFavorite();
+          }}
           className={styles.favoriteButton}
           aria-label="Marcar como favorito"
         >
@@ -66,7 +73,10 @@ export default function CardDisplay({
         {[1, 2, 3, 4, 5].map((value) => (
           <IconButton
             key={value}
-            onClick={() => onSetRating(value)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSetRating(value);
+            }}
             sx={{ p: 0 }}
             aria-label={`Avaliar com ${value} estrelas`}
           >
@@ -97,10 +107,16 @@ export default function CardDisplay({
 
         {/* Botões de ação: comprar e carrinho */}
         <div className={styles.actions}>
-          <button className={styles.buyButton} onClick={onBuyClick}>
+          <button className={styles.buyButton} onClick={(e) => {
+            e.stopPropagation();
+            onBuyClick();
+          }}>
             Comprar
           </button>
-          <button className={styles.cartButton} onClick={onCartClick}>
+          <button className={styles.cartButton} onClick={(e) => {
+              e.stopPropagation();
+              onCartClick();
+            }}>
             <img
               src="/icons/Linear.svg"
               alt="Carrinho"
@@ -114,7 +130,10 @@ export default function CardDisplay({
       <Box className={styles.editDeleteButtons}>
         <IconButton
           className={styles.actionBtn}
-          onClick={onEditClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEditClick();
+          }}
           aria-label="Editar produto"
         >
           <EditIcon />
@@ -122,7 +141,10 @@ export default function CardDisplay({
 
         <IconButton
           className={styles.actionBtn}
-          onClick={onDeleteClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDeleteClick();
+          }}
           disabled={isDeleting}
           aria-label="Excluir produto"
         >

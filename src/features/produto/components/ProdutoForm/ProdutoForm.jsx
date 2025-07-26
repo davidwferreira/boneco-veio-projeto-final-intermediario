@@ -1,12 +1,8 @@
-// src/components/ProdutoForm/ProdutoForm.jsx
 import React from "react";
 import { useProdutoForm } from "../../hooks/useProdutoForm";
 import { Snackbar, Alert } from "@mui/material";
 import styles from "./ProdutoForm.module.css";
 
-/**
- * Formulário visual reutilizável para cadastro e edição de produtos.
- */
 export default function ProdutoForm({
   initialData,
   onSubmit: aoEnviar,
@@ -19,7 +15,7 @@ export default function ProdutoForm({
     previewImagem,
     enviando,
     mensagemFeedback,
-    lidarComMudanca,
+    lidarComMudanca, 
     calcularPrecoComDesconto,
     enviarFormulario,
     fecharSnackbar,

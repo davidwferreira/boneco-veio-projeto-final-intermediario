@@ -116,3 +116,52 @@
     font-size: .75rem;
     margin-bottom: 20px;
 }
+
+@media screen and (max-width: 700px){
+    /*footer*/
+    .flex_links_payment{
+        flex-direction: column;
+        
+    }
+    /*socials*/
+    .socials_container h3{
+        font-size: 12px;
+    }
+
+    .socials_links ul li a i{
+        transform: scale(.6);
+    }
+
+    .socials_links ul{
+        gap: 1rem;
+    }
+
+    .socials_container{
+        justify-content: space-between;
+    }
+
+    
+    /*links*/
+    .links_container{
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .links_container div h2, .payment_container div h2, .certificate_container div h2{
+        font-size: 1rem;
+    }
+
+    .links_container div ul li a{
+        font-size: .8rem;
+    }
+
+    /*certificados*/
+    .certificate_container img{
+        height: 60px;
+    }
+
+    /*bot*/
+    .bot_container p{
+        font-size: .6rem;
+    }
+}

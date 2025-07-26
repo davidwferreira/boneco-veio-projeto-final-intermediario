@@ -123,3 +123,49 @@
     text-decoration-thickness: 0.02em;
 }
 
+@media screen and (max-width: 700px){
+    /*header*/
+    .header_container{
+        width: 100%;
+        gap: 20px;
+        padding: 5px 10px 10px 10px;
+    }
+
+    .header_searchbar select{
+        display: none;
+    }
+
+    .header_searchbar input{
+        width: 150px;
+        padding: 2px 10px;
+    }
+
+    .header_logo img{
+        width: 60px;
+    }
+
+    .account{
+        display: none;
+    }
+
+    .header_searchbar select, 
+    .header_searchbar input, 
+    .header_searchbar span i{
+        padding: 5px 8px;
+    }
+
+    .cart a{
+        margin-left: 0px;
+        font-size: 18px;
+    }
+ 
+    .user_icon{
+        transform: scale(.75);
+    }
+
+    /*header bot*/
+    .links{
+        font-size: 10px;
+    }
+}
+

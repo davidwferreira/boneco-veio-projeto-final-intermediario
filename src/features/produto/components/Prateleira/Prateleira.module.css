@@ -29,8 +29,9 @@
 
 .header {
   display: flex;
-  justify-content: flex-end;
-  padding: 20px 40px 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2.5rem 0;
   background-color: var(--cor-fundo-pagina);
 }
 
@@ -48,6 +49,22 @@
 .btnAdicionar:hover {
   background-color: var(--cor-acao-hover);
 }
+
+.btnVoltar {
+  padding: var(--padding-botao);
+  background-color: var(--cor-acao);
+  color: var(--cor-texto-botao);
+  font-weight: 500;
+  border: none;
+  border-radius: var(--raio-botao);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btnVoltar:hover {
+  background-color: var(--cor-acao-hover);
+}
+
 
 /* 🔄 Responsividade */
 @media (max-width: 1024px) {
