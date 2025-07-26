@@ -1,25 +1,38 @@
 // src/routes/AppRoutes.jsx
 import { Routes, Route } from 'react-router-dom';
-
+import { BrowserRouter } from 'react-router-dom';
 // Pages (importações organizadas por feature)
 import PerfilPage from '../features/usuario/pages/PerfilPage';
 import Home from '../pages/Home';
 import EditarProduto from '../features/produto/pages/EditarProduto';
 import CadastrarProduto from '../features/produto/pages/CadastrarProduto';
-import ExibirProdutos from '../features/produto/pages/ExibirProdutos';
+import PrateleiraPage from '../pages/PrateleiraPage';
 import CarrinhoPage from '../features/carrinho/pages/CarrinhoPage';
 import NotFound from '../features/notfound/NotFoundComponent';
+import Login from '../features/usuario/Login/Login';
+import ProdutoDetalhePage from '../features/produto/pages/ProdutoDetalhePage';
+import Emconstrucao from '../features/EmConstrucao/Emconstrucao';
 
-export default function AppRoutes() {
+function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/perfil" element={<PerfilPage />} />
-      <Route path="/produtos" element={<ExibirProdutos />} />
-      <Route path="/produto/editar/:id" element={<EditarProduto />} />
-      <Route path="/produto/novo" element={<CadastrarProduto />} />
-      <Route path="/carrinho" element={<CarrinhoPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/perfil" element={<PerfilPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/produtos" element={<PrateleiraPage />} />
+          <Route path="/produtos/:id" element={<ProdutoDetalhePage />} />
+          <Route path="/produto/editar/:id" element={<EditarProduto />} />
+          <Route path="/produto/novo" element={<CadastrarProduto />} />
+          <Route path="/carrinho" element={<CarrinhoPage />} />
+          <Route path="/pedidos" element={<Emconstrucao />} />
+          <Route path="/rastreio" element={<Emconstrucao />} />
+          <Route path="/contato" element={<Emconstrucao />} />
+          <Route path="/endereco" element={<Emconstrucao />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+    </BrowserRouter>
   );
 }
+
+export default AppRoutes;
