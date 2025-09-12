@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { uploadImage } from "../services/cloudinary";
+import { uploadImage } from "../../../services/cloudinary";
 
 /**
  * Hook personalizado para controle do formulário de produto.
@@ -51,7 +51,7 @@ export function useProdutoForm({
         nota: initialData.rating || 0,
       });
 
-      setPreviewImagem(initialData.imageSrc || null);
+      setPreviewImagem(initialData?.imageSrc || null);
     }
   }, [initialData]);
 

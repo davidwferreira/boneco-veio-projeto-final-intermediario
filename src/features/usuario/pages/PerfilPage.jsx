@@ -1,7 +1,7 @@
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import styles from './PerfilPage.module.css';
-import imagemProduto from '../assets/image/15.webp'; // Placeholder para a imagem do produto
+import Header from '../../../components/common/Header/Header';
+import Footer from '../../../components/common/Footer/Footer';
+import styles from '../styles/PerfilPage.module.css'; 
+import imagemProduto from '../../../assets/image/15.webp'; // Placeholder para a imagem do produto
 // No futuro, o logo virá dos assets do projeto
 // import logoBranco from '../../assets/logo-branco.svg';
 

@@ -47,9 +47,7 @@ export default function ProdutoForm({
 
             {!modoEdicao && (
               <div className={styles.inputGroup}>
-                <label htmlFor="imagemArquivo">
-                  Imagem do Produto (arquivo)
-                </label>
+                <label htmlFor="imagemArquivo">Imagem do Produto (arquivo)</label>
                 <input
                   type="file"
                   id="imagemArquivo"

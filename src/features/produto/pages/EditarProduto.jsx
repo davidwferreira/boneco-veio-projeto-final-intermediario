@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ProdutoForm from "../../components/ProdutoForm/ProdutoForm";
-import useProdutos from "../../hooks/useProdutos";
-import { getProdutoPorId } from "../../services/produtoService";
-import Carregar from "../Detalhes/Carregar";
+import ProdutoForm from "../components/ProdutoForm/ProdutoForm";
+import useProdutos from "../hooks/useProdutos";
+import { getProdutoPorId } from "../services/produtoService";
+import Carregar from "../../../components/common/Carregar/Carregar";
 
 export default function EditarProduto() {
   const navigate = useNavigate();

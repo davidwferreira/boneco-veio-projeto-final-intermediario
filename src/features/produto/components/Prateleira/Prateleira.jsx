@@ -1,34 +1,55 @@
-import {useEffect, useState, useCallback } from "react";
+// src/components/Prateleira/Prateleira.jsx
+import React, { useState, useCallback, useEffect } from "react";
 import { Snackbar, Alert } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import CardDisplay from "../CardDisplay/CardDisplay";
-import ErrorBoundary from "../ErrorBoundary";
 import useProdutos from "../../hooks/useProdutos";
 import styles from "./Prateleira.module.css";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "../../../../context/CartContext";
 
 export default function Prateleira() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { produtos, editarProduto, deletarProduto } = useProdutos();
   const { addToCart } = useCart();
 
+  // Estado local do snackbar para mensagens de sucesso ou erro
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  const mostrarSnackbar = (mensagem, tipo = "success") =>
+  // Exibe o snackbar com mensagem e tipo (sucesso ou erro)
+  const exibirSnackbar = (mensagem, tipo = "success") => {
     setSnackbar({ open: true, message: mensagem, severity: tipo });
+  };
 
-  const handleFecharSnackbar = () =>
+  // Fecha o snackbar após o tempo ou ao clicar no botão de fechar
+  const handleFecharSnackbar = () => {
     setSnackbar((estadoAnterior) => ({ ...estadoAnterior, open: false }));
+  };
 
+  // Exibe snackbar se mensagem for passada via estado da navegação (location.state)
+  useEffect(() => {
+    const handleMensagemDeRota = () => {
+      if (location.state?.mensagem) {
+        exibirSnackbar(location.state.mensagem);
+        // Evita exibir a mesma mensagem ao voltar para a rota
+        window.history.replaceState({}, document.title);
+      }
+    };
+
+    handleMensagemDeRota();
+  }, [location.state]);
+
+  // Navega para a rota de cadastro de novo produto
   const handleAdicionarClick = useCallback(() => {
     navigate("/produto/novo");
   }, [navigate]);
 
+  // Navega para a página de edição do produto
   const handleEditarProduto = useCallback(
     (produtoId) => {
       navigate(`/produto/editar/${produtoId}`);
@@ -36,34 +57,33 @@ export default function Prateleira() {
     [navigate]
   );
 
+  // Remove produto e exibe feedback
   const handleExcluirProduto = useCallback(
     async (idProduto) => {
       try {
         await deletarProduto(idProduto);
-        mostrarSnackbar("Produto excluído com sucesso.");
+        exibirSnackbar("Produto excluído com sucesso.");
       } catch {
-        mostrarSnackbar("Erro ao excluir produto.", "error");
+        exibirSnackbar("Erro ao excluir produto.", "error");
       }
     },
     [deletarProduto]
   );
 
-  const handleVoltarHome = useCallback(() => {
-    navigate("/");
-  }, [navigate]);
-
+  // Atualiza dados de um produto e exibe mensagem personalizada
   const atualizarProduto = useCallback(
-    async (idProduto, novosDados, mensagemSucesso, mensagemErro) => {
+    async (idProduto, novosDados, { sucesso, erro }) => {
       try {
         await editarProduto(idProduto, novosDados);
-        mostrarSnackbar(mensagemSucesso);
+        exibirSnackbar(sucesso);
       } catch {
-        mostrarSnackbar(mensagemErro, "error");
+        exibirSnackbar(erro, "error");
       }
     },
     [editarProduto]
   );
 
+  // Alterna estado de favorito do produto
   const handleAlternarFavorito = useCallback(
     (idProduto) => {
       const produto = produtos.find((p) => p.id === idProduto);
@@ -71,14 +91,17 @@ export default function Prateleira() {
         atualizarProduto(
           idProduto,
           { ...produto, isFavorite: !produto.isFavorite },
-          "Favorito atualizado!",
-          "Erro ao favoritar produto."
+          {
+            sucesso: "Favorito atualizado!",
+            erro: "Erro ao favoritar produto.",
+          }
         );
       }
     },
     [produtos, atualizarProduto]
   );
 
+  // Atualiza a nota do produto (rating)
   const handleAlterarNota = useCallback(
     (idProduto, novaNota) => {
       const produto = produtos.find((p) => p.id === idProduto);
@@ -86,29 +109,20 @@ export default function Prateleira() {
         atualizarProduto(
           idProduto,
           { ...produto, rating: novaNota },
-          "Nota atualizada!",
-          "Erro ao avaliar o produto."
+          {
+            sucesso: "Nota atualizada!",
+            erro: "Erro ao avaliar o produto.",
+          }
         );
       }
     },
     [produtos, atualizarProduto]
   );
 
-  const location = useLocation();
-  useEffect(() => {
-      if (location.state?.mensagem) {
-        mostrarSnackbar(location.state.mensagem, location.state.tipo || "success");
-        window.history.replaceState({}, document.title); // limpa state
-      }
-    }, [location.state]);
-
   return (
-    <ErrorBoundary>
-      {/* Cabeçalho */}
+    <>
+      {/* Botão para adicionar novo produto */}
       <div className={styles.header}>
-        {/* <button className={styles.btnVoltar} onClick={handleVoltarHome}>
-          ⬅ Voltar para Home
-        </button> */}
         <button className={styles.btnAdicionar} onClick={handleAdicionarClick}>
           + Adicionar Produto
         </button>
@@ -126,11 +140,7 @@ export default function Prateleira() {
               onToggleFavorite={() => handleAlternarFavorito(produto.id)}
               onSetRating={(valor) => handleAlterarNota(produto.id, valor)}
               onBuyClick={() => console.log("Comprar clicado")}
-              onCartClick={() => {
-                addToCart(produto);
-                mostrarSnackbar("Produto adicionado ao carrinho!");
-              }}
-
+              onCartClick={() => addToCart(produto)}
             />
           ))
         ) : (
@@ -138,16 +148,17 @@ export default function Prateleira() {
         )}
       </div>
 
-      {/* Snackbar de feedback */}
+      {/* Snackbar de feedback visual */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
         onClose={handleFecharSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={handleFecharSnackbar} severity={snackbar.severity}>
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </ErrorBoundary>
+    </>
   );
 }

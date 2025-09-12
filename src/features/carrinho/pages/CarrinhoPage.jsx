@@ -1,8 +1,9 @@
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+
+import Header from '../../../components/common/Header/Header';
+import Footer from '../../../components/common/Footer/Footer';
 import { useMemo } from 'react';
-import { useCart } from '../context/CartContext';
-import styles from './CarrinhoPage.module.css';
+import { useCart } from '../../../context/CartContext';
+import styles from '../styles/CarrinhoPage.module.css';
 
 export default function CarrinhoPage() {
   const { cartItems } = useCart();

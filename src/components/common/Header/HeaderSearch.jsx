@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './Header.module.css';
-import logo from '../../assets/image/logoveio.png'
+import logo from '../../../assets/image/logoveio.png'
+// import logo from '../../assets/image/logoveio.png'
 import { Link } from 'react-router-dom';
 
 const HeaderSearch = () => {

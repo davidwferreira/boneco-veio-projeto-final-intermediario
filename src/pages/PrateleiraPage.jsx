@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import Prateleira from '../components/Prateleira/Prateleira.jsx';
+import Header from '../components/common/Header/Header.jsx';
+import Footer from '../components/common/Footer/Footer.jsx';
+import Prateleira from '../features/produto/components/Prateleira/Prateleira.jsx'; 
 const Home = () => {
   return (
     <>   
