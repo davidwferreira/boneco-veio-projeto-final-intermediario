@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import {
   listarProdutos,
-  adicionarProduto as adicionarProdutoAPI,
-  atualizarProduto as atualizarProdutoAPI,
-  removerProduto as removerProdutoAPI,
-} from "../services/produtoService";
+  // adicionarProduto as adicionarProdutoAPI,
+  // atualizarProduto as atualizarProdutoAPI,
+  // removerProduto as removerProdutoAPI,
+} from "../services/api";
 
 /**
  * Hook personalizado para gerenciar o estado e operações de produtos.

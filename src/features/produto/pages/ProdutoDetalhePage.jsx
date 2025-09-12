@@ -1,7 +1,7 @@
 
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProdutoPorId } from "../services/produtoService";
+import { getProdutoPorId } from "../services/api";
 import styles from "./ProdutoDetalhePage.module.css";
 
 export default function ProdutoDetalhePage() {
