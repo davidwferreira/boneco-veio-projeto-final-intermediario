@@ -40,11 +40,11 @@ const HeaderSearch = () => {
                     </div>
                 </div>
 
-                <div className={styles.cart}>
+                {/*<div className={styles.cart}>
                     <Link to="/carrinho">
                         <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
-                </div>
+                </div>*/}
             </div>
         </section>
     </>
