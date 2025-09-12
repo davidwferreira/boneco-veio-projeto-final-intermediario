@@ -19,7 +19,8 @@ function AppRoutes() {
         <Routes>
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<PrateleiraPage />} />
           <Route path="/produtos" element={<PrateleiraPage />} />
           <Route path="/produtos/:id" element={<ProdutoDetalhePage />} />
           <Route path="/produto/editar/:id" element={<EditarProduto />} />
