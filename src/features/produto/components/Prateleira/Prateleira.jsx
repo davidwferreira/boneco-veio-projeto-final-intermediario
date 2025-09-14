@@ -11,53 +11,49 @@ import { useCart } from "../../../../context/CartContext";
 export default function Prateleira() {
   const navigate = useNavigate();
   const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin"); // <-- chave
   const { produtos, editarProduto, deletarProduto } = useProdutos();
   const { addToCart } = useCart();
 
-  // Estado local do snackbar para mensagens de sucesso ou erro
+  // Snackbar
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  // Exibe o snackbar com mensagem e tipo (sucesso ou erro)
   const exibirSnackbar = (mensagem, tipo = "success") => {
     setSnackbar({ open: true, message: mensagem, severity: tipo });
   };
 
-  // Fecha o snackbar após o tempo ou ao clicar no botão de fechar
   const handleFecharSnackbar = () => {
     setSnackbar((estadoAnterior) => ({ ...estadoAnterior, open: false }));
   };
 
-  // Exibe snackbar se mensagem for passada via estado da navegação (location.state)
   useEffect(() => {
     const handleMensagemDeRota = () => {
       if (location.state?.mensagem) {
         exibirSnackbar(location.state.mensagem);
-        // Evita exibir a mesma mensagem ao voltar para a rota
         window.history.replaceState({}, document.title);
       }
     };
-
     handleMensagemDeRota();
   }, [location.state]);
 
-  // Navega para a rota de cadastro de novo produto
+  // Adicionar
   const handleAdicionarClick = useCallback(() => {
-    navigate("/produto/novo");
+    navigate("/admin/produtos/novo");
   }, [navigate]);
 
-  // Navega para a página de edição do produto
+  // Editar
   const handleEditarProduto = useCallback(
     (produtoId) => {
-      navigate(`/produto/editar/${produtoId}`);
+      navigate(`/admin/produtos/editar/${produtoId}`);
     },
     [navigate]
   );
 
-  // Remove produto e exibe feedback
+  // Excluir
   const handleExcluirProduto = useCallback(
     async (idProduto) => {
       try {
@@ -70,11 +66,11 @@ export default function Prateleira() {
     [deletarProduto]
   );
 
-  // Atualiza dados de um produto e exibe mensagem personalizada
+  // Atualizar (não usado no admin para favorito/nota)
   const atualizarProduto = useCallback(
-    async (idProduto, novosDados, { sucesso, erro }) => {
+    async (idProduto, patch, { sucesso, erro }) => {
       try {
-        await editarProduto(idProduto, novosDados);
+        await editarProduto(idProduto, patch);
         exibirSnackbar(sucesso);
       } catch {
         exibirSnackbar(erro, "error");
@@ -83,64 +79,65 @@ export default function Prateleira() {
     [editarProduto]
   );
 
-  // Alterna estado de favorito do produto
+  // Favorito (somente público; admin não usa)
   const handleAlternarFavorito = useCallback(
     (idProduto) => {
-      const produto = produtos.find((p) => p.id === idProduto);
-      if (produto) {
-        atualizarProduto(
-          idProduto,
-          { ...produto, isFavorite: !produto.isFavorite },
-          {
-            sucesso: "Favorito atualizado!",
-            erro: "Erro ao favoritar produto.",
-          }
-        );
-      }
+      if (isAdmin) return;
+      atualizarProduto(
+        idProduto,
+        { isFavorite: true }, // placeholder: substituir quando ligar endpoint de favoritos
+        {
+          sucesso: "Favorito atualizado!",
+          erro: "Erro ao favoritar produto.",
+        }
+      );
     },
-    [produtos, atualizarProduto]
+    [isAdmin, atualizarProduto]
   );
 
-  // Atualiza a nota do produto (rating)
+  // Nota (somente público; admin não usa)
   const handleAlterarNota = useCallback(
     (idProduto, novaNota) => {
-      const produto = produtos.find((p) => p.id === idProduto);
-      if (produto) {
-        atualizarProduto(
-          idProduto,
-          { ...produto, rating: novaNota },
-          {
-            sucesso: "Nota atualizada!",
-            erro: "Erro ao avaliar o produto.",
-          }
-        );
-      }
+      if (isAdmin) return;
+      atualizarProduto(
+        idProduto,
+        { rating: novaNota },
+        {
+          sucesso: "Nota atualizada!",
+          erro: "Erro ao avaliar o produto.",
+        }
+      );
     },
-    [produtos, atualizarProduto]
+    [isAdmin, atualizarProduto]
   );
 
   return (
     <>
-      {/* Botão para adicionar novo produto */}
+      {/* Header */}
       <div className={styles.header}>
         <button className={styles.btnAdicionar} onClick={handleAdicionarClick}>
           + Adicionar Produto
         </button>
       </div>
 
-      {/* Lista de produtos */}
+      {/* Lista */}
       <div className={styles.container}>
         {produtos.length > 0 ? (
           produtos.map((produto) => (
             <CardDisplay
               key={produto.id}
               {...produto}
+              adminMode={isAdmin} // <-- mostra ações no hover
+              disableNavigation={isAdmin} // <-- evita ir para /produtos/:id ao clicar no card
               onEditClick={() => handleEditarProduto(produto.id)}
               onDeleteClick={() => handleExcluirProduto(produto.id)}
-              onToggleFavorite={() => handleAlternarFavorito(produto.id)}
-              onSetRating={(valor) => handleAlterarNota(produto.id, valor)}
-              onBuyClick={() => console.log("Comprar clicado")}
-              onCartClick={() => addToCart(produto)}
+              // Só passa interações públicas quando NÃO é admin
+              {...(!isAdmin && {
+                onToggleFavorite: () => handleAlternarFavorito(produto.id),
+                onSetRating: (valor) => handleAlterarNota(produto.id, valor),
+                onBuyClick: () => console.log("Comprar clicado"),
+                onCartClick: () => addToCart(produto),
+              })}
             />
           ))
         ) : (
@@ -148,7 +145,7 @@ export default function Prateleira() {
         )}
       </div>
 
-      {/* Snackbar de feedback visual */}
+      {/* Snackbar */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}

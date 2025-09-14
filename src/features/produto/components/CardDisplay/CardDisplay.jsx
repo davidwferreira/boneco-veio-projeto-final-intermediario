@@ -1,18 +1,15 @@
-import { IconButton, Box, CardMedia } from "@mui/material";
+// src/components/Prateleira/CardDisplay/CardDisplay.jsx
+import { IconButton, Box, CardMedia, Tooltip } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { formatPrice } from "../../../../utils/formatPrice";
 import { useNavigate } from "react-router-dom";
-
 import styles from "./CardDisplay.module.css";
 
 /**
- * Componente visual de cartão de produto.
- * Exibe imagem, título, preço, desconto, tags, nota, ações (editar/excluir).
+ * Card de Produto — visão pública + admin (hover revela ações)
  */
 export default function CardDisplay({
   id,
@@ -24,80 +21,75 @@ export default function CardDisplay({
   originalPrice = "",
   price = "",
   discount = "",
+  stock = 0,           // <-- novo
   isDeleting = false,
+
+  // flags
+  adminMode = false,
+  disableNavigation = false,
+
+  // callbacks
   onBuyClick = () => {},
   onCartClick = () => {},
   onEditClick = () => {},
   onDeleteClick = () => {},
   onToggleFavorite = () => {},
   onSetRating = () => {},
-}) {    
+  onNavigate, // opcional
+}) {
   const navigate = useNavigate();
 
+  const handleCardClick = () => {
+    if (disableNavigation) return;
+    if (typeof onNavigate === "function") onNavigate(id);
+    else navigate(`/produtos/${id}`);
+  };
+
+  const stop = (e) => e.stopPropagation();
+
   return (
-    <div className={styles.card}
-      onClick={() => navigate(`/produtos/${id}`)}
-      style={{ cursor: "pointer" }}
+    <div
+      className={styles.card}
+      onClick={handleCardClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && handleCardClick()}
+      aria-label={`Produto ${title}`}
     >
-      
-      {/* Topo: tags e botão de favorito */}
+      {/* Topo: tags + favorito (somente público) */}
       <Box className={styles.topBox}>
         <Box className={styles.tags}>
           {isNew && <div className={styles.chipYellow}>Novidade</div>}
           {discount && <div className={styles.chipBlue}>{`${discount}% off`}</div>}
         </Box>
 
-        <IconButton
-          onClick={(e) => {
-            e.stopPropagation();     // Impede a navegação
-            onToggleFavorite();
-          }}
-          className={styles.favoriteButton}
-          aria-label="Marcar como favorito"
-        >
-          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        </IconButton>
+        {!adminMode && (
+          <Tooltip title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}>
+            <IconButton
+              onClick={(e) => {
+                stop(e);
+                onToggleFavorite();
+              }}
+              className={styles.favoriteButton}
+              aria-label="Marcar como favorito"
+            >
+              {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
 
-      {/* Imagem do produto */}
+      {/* Imagem */}
       <Box className={styles.imageContainer}>
-        <CardMedia
-          component="img"
-          className={styles.cardMedia}
-          image={imageSrc}
-          alt={title}
-        />
+        <CardMedia component="img" className={styles.cardMedia} image={imageSrc} alt={title} />
       </Box>
 
-      {/* Estrelas de avaliação */}
-      <div className={styles.stars}>
-        {[1, 2, 3, 4, 5].map((value) => (
-          <IconButton
-            key={value}
-            onClick={(e) => {
-              e.stopPropagation();
-              onSetRating(value);
-            }}
-            sx={{ p: 0 }}
-            aria-label={`Avaliar com ${value} estrelas`}
-          >
-            {value <= rating ? (
-              <StarIcon sx={{ fontSize: 18, color: "#0B0C10" }} />
-            ) : (
-              <StarBorderIcon sx={{ fontSize: 18, color: "#0B0C10" }} />
-            )}
-          </IconButton>
-        ))}
-      </div>
-
-      {/* Título e descrição */}
+      {/* Conteúdo */}
       <div className={styles.cardContent}>
         <h1 className={styles.title}>{title}</h1>
-        {/* ocultar o descrição */}
-        {/* <p className={styles.description}>{description}</p> */} 
       </div>
 
-      {/* Preço atual e original */}
+      {/* Preço + Estoque discreto */}
       <div className={styles.priceAndButtons}>
         <div className={styles.priceBlock}>
           {originalPrice && originalPrice !== price && (
@@ -106,52 +98,51 @@ export default function CardDisplay({
           <span className={styles.newPrice}>{formatPrice(price)}</span>
         </div>
 
-        {/* Botões de ação: comprar e carrinho */}
-        <div className={styles.actions}>
-          <button className={styles.buyButton} onClick={(e) => {
-            e.stopPropagation();
-            onBuyClick();
-          }}>
-            Comprar
-          </button>
-          <button className={styles.cartButton} onClick={(e) => {
-              e.stopPropagation();
-              onCartClick();
-            }}>
-            <img
-              src="/icons/Linear.svg"
-              alt="Carrinho"
-              className={styles.icon}
-            />
-          </button>
+        {/* Substitui a área dos botões por uma “pílula” de estoque */}
+        <div
+          className={styles.stockPill}
+          title={stock > 0 ? `Em estoque: ${stock}` : "Sem estoque"}
+          onClick={stop}
+        >
+          {stock > 0 ? `Estoque: ${stock}` : "Sem estoque"}
         </div>
       </div>
 
-      {/* Ações administrativas: editar e excluir */}
-      <Box className={styles.editDeleteButtons}>
-        <IconButton
-          className={styles.actionBtn}
-          onClick={(e) => {
-            e.stopPropagation();
-            onEditClick();
-          }}
-          aria-label="Editar produto"
-        >
-          <EditIcon />
-        </IconButton>
+      {/* Ações administrativas (só no admin), reveladas no hover */}
+      {/* Por enquanto é true - mas é para recener isso da variavel adminMode:true || false  */}
+      {true && (
+        <Box className={styles.editDeleteButtons}>
+          <Tooltip title="Editar">
+            <IconButton
+              className={styles.actionBtn}
+              onClick={(e) => {
+                stop(e);
+                onEditClick();
+              }}
+              aria-label="Editar produto"
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
 
-        <IconButton
-          className={styles.actionBtn}
-          onClick={(e) => {
-            e.stopPropagation();
-            onDeleteClick();
-          }}
-          disabled={isDeleting}
-          aria-label="Excluir produto"
-        >
-          {isDeleting ? <span>Excluindo...</span> : <DeleteIcon />}
-        </IconButton>
-      </Box>
+          <Tooltip title={isDeleting ? "Excluindo..." : "Excluir"}>
+            {/* span para permitir tooltip em botão desabilitado */}
+            <span>
+              <IconButton
+                className={styles.actionBtn}
+                onClick={(e) => {
+                  stop(e);
+                  onDeleteClick();
+                }}
+                disabled={isDeleting}
+                aria-label="Excluir produto"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </span>
+          </Tooltip>
+        </Box>
+      )}
     </div>
   );
 }

@@ -1,91 +1,75 @@
+// src/hooks/useProdutos.js
 import { useState, useEffect } from "react";
 import {
   listarProdutos,
-  // adicionarProduto as adicionarProdutoAPI,
-  // atualizarProduto as atualizarProdutoAPI,
-  // removerProduto as removerProdutoAPI,
+  getProdutoPorId,
 } from "../services/api";
+import {
+  adminCriarProduto,
+  adminAtualizarProduto,
+  adminRemoverProduto,
+} from "../services/produtoAdminService";
 
-/**
- * Hook personalizado para gerenciar o estado e operações de produtos.
- */
 const useProdutos = () => {
   const [produtos, setProdutos] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  /**
-   * Carrega todos os produtos do banco de dados e atualiza o estado.
-   */
-  const carregarProdutos = async () => {
+  const carregarProdutos = async (params) => {
     try {
-      const produtosRecebidos = await listarProdutos();
-      setProdutos(produtosRecebidos);
+      setLoading(true);
+      const lista = await listarProdutos(params);
+      setProdutos(lista);
     } catch (erro) {
       console.error("Erro ao carregar produtos:", erro);
+      throw erro;
+    } finally {
+      setLoading(false);
     }
   };
 
-  /**
-   * Adiciona um novo produto usando o serviço da API.
-   * @param {Object} novoProduto - dados do novo produto
-   */
   const adicionarProduto = async (novoProduto) => {
     try {
-      const produtoAdicionado = await adicionarProdutoAPI(novoProduto);
-      setProdutos((produtosAnteriores) => [
-        ...produtosAnteriores,
-        produtoAdicionado,
-      ]);
+      const criado = await adminCriarProduto(novoProduto);
+      setProdutos((prev) => [criado, ...prev]);
+      return criado;
     } catch (erro) {
       console.error("Erro ao adicionar produto:", erro);
       throw erro;
     }
   };
 
-  /**
-   * Atualiza os dados de um produto existente.
-   * @param {string} id - ID do produto
-   * @param {Object} dadosAtualizados - novos dados do produto
-   */
   const editarProduto = async (id, dadosAtualizados) => {
     try {
-      await atualizarProdutoAPI(id, dadosAtualizados);
-      setProdutos((produtosAnteriores) =>
-        produtosAnteriores.map((produtoAtual) =>
-          produtoAtual.id === id
-            ? { ...produtoAtual, ...dadosAtualizados }
-            : produtoAtual
-        )
+      const atualizado = await adminAtualizarProduto(id, dadosAtualizados);
+      setProdutos((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, ...atualizado } : p))
       );
+      return atualizado;
     } catch (erro) {
       console.error("Erro ao editar produto:", erro);
       throw erro;
     }
   };
 
-  /**
-   * Remove um produto do banco de dados e atualiza o estado local.
-   * @param {string} id - ID do produto a ser removido
-   */
   const deletarProduto = async (id) => {
     try {
-      await removerProdutoAPI(id);
-      setProdutos((produtosAnteriores) =>
-        produtosAnteriores.filter((produto) => produto.id !== id)
-      );
+      await adminRemoverProduto(id);
+      setProdutos((prev) => prev.filter((p) => p.id !== id));
     } catch (erro) {
       console.error("Erro ao deletar produto:", erro);
       throw erro;
     }
   };
 
-  // Carrega a lista de produtos ao inicializar
   useEffect(() => {
     carregarProdutos();
   }, []);
 
   return {
     produtos,
+    loading,
     carregarProdutos,
+    getProdutoPorId,  // útil em páginas de detalhe/edição
     adicionarProduto,
     editarProduto,
     deletarProduto,
