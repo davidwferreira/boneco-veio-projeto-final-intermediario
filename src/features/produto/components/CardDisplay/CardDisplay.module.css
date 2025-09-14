@@ -60,6 +60,21 @@
   z-index: 10;
 }
 
+/* ---- pílula de estoque ---- */
+.stockPill {
+  align-self: center;
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.04);
+  color: #222;
+  user-select: none;
+  white-space: nowrap;
+}
+
 .actionBtn {
   background-color: var(--cor-acao) !important;
   color: var(--cor-texto-principal) !important;

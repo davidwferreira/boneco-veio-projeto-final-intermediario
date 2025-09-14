@@ -23,8 +23,8 @@ function AppRoutes() {
           <Route path="/" element={<PrateleiraPage />} />
           <Route path="/produtos" element={<PrateleiraPage />} />
           <Route path="/produtos/:id" element={<ProdutoDetalhePage />} />
-          <Route path="/produto/editar/:id" element={<EditarProduto />} />
-          <Route path="/produto/novo" element={<CadastrarProduto />} />
+          <Route path="/admin/produtos/editar/:id" element={<EditarProduto />} />
+          <Route path="/admin/produtos/novo" element={<CadastrarProduto />} />
           <Route path="/carrinho" element={<CarrinhoPage />} />
           <Route path="/pedidos" element={<Emconstrucao />} />
           <Route path="/rastreio" element={<Emconstrucao />} />

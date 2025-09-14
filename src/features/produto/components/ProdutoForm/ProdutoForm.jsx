@@ -15,7 +15,7 @@ export default function ProdutoForm({
     previewImagem,
     enviando,
     mensagemFeedback,
-    lidarComMudanca, 
+    lidarComMudanca,
     calcularPrecoComDesconto,
     enviarFormulario,
     fecharSnackbar,
@@ -47,7 +47,9 @@ export default function ProdutoForm({
 
             {!modoEdicao && (
               <div className={styles.inputGroup}>
-                <label htmlFor="imagemArquivo">Imagem do Produto (arquivo)</label>
+                <label htmlFor="imagemArquivo">
+                  Imagem do Produto (arquivo)
+                </label>
                 <input
                   type="file"
                   id="imagemArquivo"
@@ -127,6 +129,21 @@ export default function ProdutoForm({
                   className={styles.input}
                 />
               </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="estoque">Estoque</label>
+              <input
+                type="number"
+                id="estoque"
+                name="estoque"
+                min="0"
+                step="1"
+                value={dadosFormulario.estoque}
+                onChange={lidarComMudanca}
+                placeholder="Quantidade em estoque"
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.resultadoBox}>
